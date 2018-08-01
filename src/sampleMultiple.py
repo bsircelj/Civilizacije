@@ -11,8 +11,11 @@ def sampleMultiple(parameters,size,times):
     for t in range(0,times):
         val = 1
         for p in parameters:
-            val *= sample(p)
+            newVal = sample(p)
+            val *= newVal
         dist = add(dist,size,val)
+        if t%10 == 0:
+            print(t)
     return dist
         
         
@@ -28,15 +31,17 @@ def add(dist,size, value):
         
 
 def sample(distribution):
-    random.seed(1)
+    random.seed()
     rand = random.random()#Check if Mersene Twister
     length = distribution[2].size
     beg = distribution[0]
     end = distribution[1]
     step = (end-beg)/length
     cumulSum = 0
+    distance = beg
     for i in range(0,length-1):
         cumulSum += distribution[2][i]
-        if cumulSum >= rand:
-            return step*(i+1)
+        if cumulSum < rand:
+            distance+=step
+    return distance
     

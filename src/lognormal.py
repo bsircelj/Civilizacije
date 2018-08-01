@@ -1,42 +1,46 @@
 import numpy as np
 from math import *
 
+
 """
 Generous estimates made in the article:
 """ 
-mean = 0.5
-median = 0.63
+def lognormal(min=0.000000000000000000001,max=1,size=1000000):
+    
+    mean = 0.5
+    median = 0.63
+    
+    mu = log(median, e)
+    #print(mu)
+    #print(2 * ( mean - mu))
+    sigma = pow(10,10) 
+    
+    
+    #s = np.random.lognormal(mu, sigma, 100000)
+    #print(s)
+    
+    import matplotlib.pyplot as plt
+    
+    """
+    count, bins, ignored = plt.hist(s, 100, normed=True, align='mid')
+    print("bins: ")
+    print(bins)
+    print(min(bins))
+    print(max(bins))
+    """
 
-mu = log(median, e)
-print(mu)
-print(2 * ( mean - mu))
-sigma = pow(10,10) 
+    x = np.linspace(min, max , size)
+    #print(" ")
+    #print("x: ")
+    #print(x)
+    pdf = (np.exp(-(np.log(x) - mu)**2 / (2 * sigma**2))
+           / (x * sigma * np.sqrt(2 * np.pi)))
 
+    return (min,max,pdf)
+#plt.plot(x, pdf, linewidth=2, color='r')
 
-s = np.random.lognormal(mu, sigma, 100000)
-print(s)
-
-import matplotlib.pyplot as plt
-
-"""
-count, bins, ignored = plt.hist(s, 100, normed=True, align='mid')
-print("bins: ")
-print(bins)
-print(min(bins))
-print(max(bins))
-"""
-
-x = np.linspace(0.000000000000000000001, 1 , 1000000)
-print(" ")
-print("x: ")
-print(x)
-pdf = (np.exp(-(np.log(x) - mu)**2 / (2 * sigma**2))
-       / (x * sigma * np.sqrt(2 * np.pi)))
-
-plt.plot(x, pdf, linewidth=2, color='r')
-
-plt.xscale('log')
-plt.show()
+#plt.xscale('log')
+#plt.show()
 
 
 
