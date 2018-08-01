@@ -1,17 +1,42 @@
 import numpy as np
+from math import *
+
+"""
+Generous estimates made in the article:
+""" 
+mean = 0.5
+median = 0.63
+
+mu = log(median, e)
+print(mu)
+print(2 * ( mean - mu))
+sigma = pow(10,10) 
 
 
-def lognormal(low=0.001, high=1, size=10, base=np.exp(1)):
-    pdf = np.linspace(low, high, size)
-    pdf = 1/(pdf * (np.log(high)- np.log(low)))
-    return  pdf
+s = np.random.lognormal(mu, sigma, 100000)
+print(s)
 
+import matplotlib.pyplot as plt
 
+"""
+count, bins, ignored = plt.hist(s, 100, normed=True, align='mid')
+print("bins: ")
+print(bins)
+print(min(bins))
+print(max(bins))
+"""
 
+x = np.linspace(0.000000000000000000001, 1 , 1000000)
+print(" ")
+print("x: ")
+print(x)
+pdf = (np.exp(-(np.log(x) - mu)**2 / (2 * sigma**2))
+       / (x * sigma * np.sqrt(2 * np.pi)))
 
+plt.plot(x, pdf, linewidth=2, color='r')
 
-
-
+plt.xscale('log')
+plt.show()
 
 
 
