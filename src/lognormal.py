@@ -13,7 +13,8 @@ def lognormal(min=0.000000000000000000001,max=1,size=1000000):
     mu = log(median, e)
     #print(mu)
     #print(2 * ( mean - mu))
-    sigma = pow(10,10) 
+    #sigma = pow(10,10) 
+    sigma = 0.679
     
     
     #s = np.random.lognormal(mu, sigma, 100000)

@@ -22,7 +22,8 @@ Length = loguniform(100,10000000000,size)
 
 final = sampleMultiple([Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length],size,1000)
 
-plt.plot(fl.gaussian_filter(final,10))
+#plt.plot(fl.gaussian_filter(final,10))
+plt.plot(final)
 plt.show()
 
 
