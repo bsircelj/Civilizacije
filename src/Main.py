@@ -8,6 +8,7 @@ from lognormal import lognormal
 from sampleMultiple import sampleMultiple
 import numpy as np
 import matplotlib.pyplot as plt
+import scipy.ndimage.filters as fl
 
 size = 1000;
 
@@ -21,7 +22,7 @@ Length = loguniform(100,10000000000,size)
 
 final = sampleMultiple([Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length],size,1000)
 
-plt.plot(final)
+plt.plot(fl.gaussian_filter(final,10))
 plt.show()
 
 

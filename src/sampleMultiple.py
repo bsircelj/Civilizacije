@@ -14,8 +14,8 @@ def sampleMultiple(parameters,size,times):
             newVal = sample(p)
             val *= newVal
         dist = add(dist,size,val)
-        if t%10 == 0:
-            print(t)
+        #f t%10 == 0:
+        #    print(t)
     return dist
         
         
