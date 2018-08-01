@@ -8,7 +8,7 @@ import random
 
 def sampleMultiple(parameters,size,times):
     dist = [0]*size
-    for t in times:
+    for t in range(0,times):
         val = 1
         for p in parameters:
             val *= sample(p)
@@ -19,7 +19,8 @@ def sampleMultiple(parameters,size,times):
 def add(dist,size, value):
     step = 55/size
     start = -40
-    for i in range(1,size-1):
+    r = range(1,size)
+    for i in r:
         current = 10**(start+step*i)
         if value<current:
             dist[i-1]+=1
@@ -27,14 +28,15 @@ def add(dist,size, value):
         
 
 def sample(distribution):
-    rand = random()#Check if Mersene Twister
-    length = distribution[3].size
+    random.seed(1)
+    rand = random.random()#Check if Mersene Twister
+    length = distribution[2].size
     beg = distribution[0]
     end = distribution[1]
     step = (end-beg)/length
     cumulSum = 0
     for i in range(0,length-1):
-        cumulSum += distribution[3][i]
+        cumulSum += distribution[2][i]
         if cumulSum >= rand:
             return step*(i+1)
     
