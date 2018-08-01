@@ -8,14 +8,17 @@ import random
 
 def sampleMultiple(parameters,size,times):
     dist = [0]*size
+    izpis=0
     for t in range(0,times):
         val = 1
         for p in parameters:
             newVal = sample(p)
             val *= newVal
         dist = add(dist,size,val)
-        #f t%10 == 0:
-        #    print(t)
+        if t%(size/10) == 0:
+            izpis+=10
+            print(izpis,"%")
+            
     return dist
         
         
