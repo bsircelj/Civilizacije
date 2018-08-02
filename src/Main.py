@@ -21,12 +21,12 @@ Fintelligence = loguniform(0.001,1,size)
 Fcivilization = loguniform(0.01,1,size)
 Length = loguniform(100,10000000000,size)
 
-#(xaxis, final) = sampleMultiple([Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length],size,1000)
+(xaxis, final) = sampleMultiple([Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length],size,1000)
 #(xaxis, final) = sampleMultiple([Rstar,Fplanets,Nhabitable,Fintelligence,Fcivilization,Length],size,1000)
 
 
-tog = [Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length]
-(xaxis, final) = sampleMultiple(tog[0:4],size,1000)
+#tog = [Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length]
+#(xaxis, final) = sampleMultiple(tog[0:4],size,1000)
 
 
 final = fl.gaussian_filter(final,5)
