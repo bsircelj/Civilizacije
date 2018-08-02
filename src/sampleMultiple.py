@@ -15,13 +15,29 @@ def sampleMultiple(parameters,size,times):
             newVal = sample(p)
             val *= newVal
         dist = add(dist,size,val)
-        if t%(size/10) == 0:
+        if t%(times/10) == 0:
             izpis+=10
             print(izpis,"%")
             
-    return dist
+    return normalize(scale(size),dist)
+
+def normalize(xaxis, dist):
+    surface = 0
+    for i in range(1,len(xaxis)-1):
+        surface+= (xaxis[i]-xaxis[i-1])*dist[i]
+    newDist = [i/surface for i in dist]
+    return (xaxis, newDist)
+    
         
-        
+def scale(size):
+    scale = [0]*size
+    step = 55/size
+    start = -40
+    r = range(1,size)
+    for i in r:
+        scale[i] = 10**(start+step*i)
+    return scale
+
 def add(dist,size, value):
     step = 55/size
     start = -40
@@ -35,7 +51,7 @@ def add(dist,size, value):
 
 def sample(distribution):
     random.seed()
-    rand = random.random()#Check if Mersene Twister
+    rand = random.random()
     length = distribution[2].size
     beg = distribution[0]
     end = distribution[1]
