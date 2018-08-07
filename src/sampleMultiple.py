@@ -15,6 +15,7 @@ def sampleMultiple(parameters,size,times):
         for p in parameters:
             newVal = sample(p)
             #newVal = p.getSample(1)
+            '''
             print(newVal)
             pt = newVal.point
             print(pt)
@@ -22,13 +23,15 @@ def sampleMultiple(parameters,size,times):
             print(v)
             if newVal == 0:
                 print("ZERO\n")
+            '''
             val *= newVal
         dist = add(dist,size,val)
         if t%(times/10) == 0:
             print(izpis,"%")
             izpis+=10
             
-    return normalize(scale(size),dist)
+    #return normalize(scale(size),dist)
+    return (scale(size),dist)
 
 def normalize(xaxis, dist):
     surface = 0
@@ -72,7 +75,7 @@ def sample(distribution):
     distance = beg
     for i in range(0,length-1):
         cumulSum += distribution[2][i]
-        if cumulSum < rand:
-            distance+=step
+        if cumulSum > rand:
+            return lin[i]
     return distance
     

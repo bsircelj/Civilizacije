@@ -10,6 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.ndimage.filters as fl
 import openturns as ot
+from lifeDist import lifeDist
 from openturns.viewer import View
 
 size = 1000;
@@ -18,8 +19,9 @@ size = 1000;
 Rstar = loguniform(1,100,size)
 Fplanets = loguniform(0.1,1,size)
 Nhabitable = loguniform(0.1,1,size)
-Flife = lognormal(10**(-200),1,size)
+#Flife = lognormal(10**(-40),1,size)
 #Flife = loguniform(1,1000,size)
+Flife = (0,1,lifeDist(size))
 Fintelligence = loguniform(0.001,1,size)
 Fcivilization = loguniform(0.01,1,size)
 Length = loguniform(100,10000000000,size)
@@ -44,8 +46,10 @@ Length = ot.LogUniform(100,10000000000)
 '''
 
 
-(xaxis, final) = sampleMultiple([Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length],size,1000)
-#(xaxis, final) = sampleMultiple([Rstar,Fplanets,Nhabitable,Fintelligence,Fcivilization,Length],size,1000)
+#(xaxis, final) = sampleMultiple([Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length],size,1000)
+(xaxis, final) = sampleMultiple([Rstar,Fplanets,Nhabitable,Fintelligence,Fcivilization,Length],size,1000)
+
+#(xaxis, final) = sampleMultiple([Flife],size,10000)
 
 
 #tog = [Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length]
