@@ -4,7 +4,8 @@ Created on 1 Aug 2018
 @author: benos
 '''
 import random
-
+import openturns as ot
+import numpy as np
 
 def sampleMultiple(parameters,size,times):
     dist = [0]*size
@@ -13,11 +14,19 @@ def sampleMultiple(parameters,size,times):
         val = 1
         for p in parameters:
             newVal = sample(p)
+            #newVal = p.getSample(1)
+            print(newVal)
+            pt = newVal.point
+            print(pt)
+            v = pt.value
+            print(v)
+            if newVal == 0:
+                print("ZERO\n")
             val *= newVal
         dist = add(dist,size,val)
         if t%(times/10) == 0:
-            izpis+=10
             print(izpis,"%")
+            izpis+=10
             
     return normalize(scale(size),dist)
 
@@ -25,6 +34,7 @@ def normalize(xaxis, dist):
     surface = 0
     for i in range(1,len(xaxis)-1):
         surface+= (xaxis[i]-xaxis[i-1])*dist[i]
+    print("\n\nSURFACE",surface)
     newDist = [i/surface for i in dist]
     return (xaxis, newDist)
     
@@ -49,13 +59,15 @@ def add(dist,size, value):
             return dist
         
 
+
+
 def sample(distribution):
     random.seed()
     rand = random.random()
     length = distribution[2].size
     beg = distribution[0]
     end = distribution[1]
-    step = (end-beg)/length
+    lin = np.linspace(distribution[0], distribution[1], len(distribution[2]))
     cumulSum = 0
     distance = beg
     for i in range(0,length-1):
