@@ -14,6 +14,7 @@ import openturns as ot
 from lifeDist import lifeDist
 from openturns.viewer import View
 from mpmath import *
+import time
 
 size = 1000;
 
@@ -23,7 +24,7 @@ Fplanets = mpLogUniform(0.1,1,size)
 Nhabitable = mpLogUniform(0.1,1,size)
 #Flife = lognormal(10**(-40),1,size)
 #Flife = loguniform(1,1000,size)
-#Flife = (0,1,lifeDist(size))
+Flife = (0,1,lifeDist(size))
 Fintelligence = mpLogUniform(0.001,1,size)
 Fcivilization = mpLogUniform(0.01,1,size)
 Length = mpLogUniform(100,10000000000,size)
@@ -48,8 +49,8 @@ Length = ot.LogUniform(100,10000000000)
 '''
 
 
-#(xaxis, final) = sampleMultiple([Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length],size,1000)
-(xaxis, final) = mpSampleMultiple([Rstar,Fplanets,Nhabitable,Fintelligence,Fcivilization,Length],size,10000)
+(xaxis, final) = sampleMultiple([Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length],size,1000)
+#(xaxis, final) = mpSampleMultiple([Rstar,Fplanets,Nhabitable,Fintelligence,Fcivilization,Length],size,10000)
 
 #(xaxis, final) = sampleMultiple([Flife],size,10000)
 
