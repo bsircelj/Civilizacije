@@ -10,9 +10,7 @@ from mpSampleMultiple import mpSampleMultiple
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.ndimage.filters as fl
-import openturns as ot
 from lifeDist import lifeDist
-from openturns.viewer import View
 from mpmath import *
 import time
 
