@@ -18,13 +18,12 @@ def lifeDist(times):
     V = mpLogUniform(10 ** (-35), 10 ** (15), size)
     t = mpLogUniform(10 ** (14), 10 ** (17), size)
     dist = [0] * times
-    val = 1
     izpis = 0
     for i in range (0, times):
         if i % (times / 10) == 0:
             print(izpis, "% mp")
             izpis += 10
-        
+        val = 1
         val *= sample(lamb)
         val *= sample(V)
         val *= sample(t)        
