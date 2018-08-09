@@ -4,7 +4,6 @@ Created on 8 Aug 2018
 @author: benos
 '''
 import random
-import openturns as ot
 import numpy as np
 from mpmath import *
 
