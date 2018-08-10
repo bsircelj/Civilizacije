@@ -15,8 +15,10 @@ from mpmath import *
 import time
 from meanMedian import meanMedian
 from IO import save,readFile
+from mpUniform import mpUniform
 
-size = 1000;
+#size = 100000;
+size=500;
 
 timeStart = time.time()
 
@@ -25,7 +27,8 @@ Fplanets = mpLogUniform(0.1, 1, size)
 Nhabitable = mpLogUniform(0.1, 1, size)
 # Flife = lognormal(10**(-40),1,size)
 # Flife = loguniform(1,1000,size)
-Flife = (0,1,lifeDist(size,size*2))
+#Flife = (0,1,lifeDist(size,size/2))
+Flife = mpUniform(mpmathify(10**(-156)),1,size)
 Fintelligence = mpLogUniform(0.001, 1, size)
 Fcivilization = mpLogUniform(0.01, 1, size)
 Length = mpLogUniform(100, 10000000000, size)
@@ -50,7 +53,7 @@ Length = ot.LogUniform(100,10000000000)
 '''
 
 # (xaxis, final) = sampleMultiple([Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length],size,1000)
-(xaxis, final) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable,Flife, Fintelligence, Fcivilization, Length], size, 10)
+(xaxis, final) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length], size, 10)
 # (xaxis, final) = sampleMultiple([Flife],size,10000)
 
 # tog = [Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length]
@@ -58,7 +61,7 @@ Length = ot.LogUniform(100,10000000000)
 
 save(xaxis,final,(time.time() - timeStart),'firstTry')
 
-final = fl.gaussian_filter(final, 5)
+#final = fl.gaussian_filter(final, 5)
 (mean, median) = meanMedian(final, xaxis)
 
 print("time: ", (time.time() - timeStart))
