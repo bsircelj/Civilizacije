@@ -16,8 +16,8 @@ from logHistogramAdd import logHistogramAdd
 def lifeDist(size, times):
     #size = 1000
     # mpmathify(10**(-188))
-    #lamb = mpLogNormal(mpmathify(10 ** (-10)), mpmathify(10 ** (10)), size, 1, mpmathify(10 ** 50))
-    lamb = mpLogUniform(mpmathify(10 ** (-188)), mpmathify(10 ** (12)), size)
+    lamb = mpLogNormal(mpmathify(10 ** (-10)), mpmathify(10 ** (10)), size, 1, mpmathify(10 ** 50))
+    #lamb = mpLogUniform(mpmathify(10 ** (-188)), mpmathify(10 ** (12)), size)
     V = mpLogUniform(mpmathify(10 ** (-35)), mpmathify(10 ** (15)), size)
     t = mpLogUniform(mpmathify(10 ** (14)), mpmathify(10 ** (17)), size)
     dist = [0] * times
