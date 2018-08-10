@@ -8,6 +8,8 @@ import numpy as np
 from mpmath import *
 from mpLogspace import mpLogspace
 from logHistogramAdd import logHistogramAdd
+import time
+
 
 def mpSampleMultiple(parameters,size,times):
     dist = [0]*size
@@ -31,6 +33,21 @@ def mpSampleMultiple(parameters,size,times):
         if t%(times/10) == 0:
             print(izpis,"%")
             izpis+=10
+            
+    #return normalize(scale(size),dist)
+    return (scale(size),dist)
+
+def mpSampleMultipleTime(parameters,size,timeLimit):
+    dist = [0]*size
+    timeStart = time.time()
+    while True:
+        val = mpf('1.0')
+        for p in parameters:
+            newVal = sample(p)
+            val *= newVal
+        dist = logHistogramAdd(-40,15,size,dist,val)
+        if time.time()-timeStart>timeLimit:
+            break  
             
     #return normalize(scale(size),dist)
     return (scale(size),dist)

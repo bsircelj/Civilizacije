@@ -6,7 +6,7 @@ Created on 8 Aug 2018
 
 from mpLogUniform import mpLogUniform
 from mpLogNormal import mpLogNormal
-from mpSampleMultiple import mpSampleMultiple
+from mpSampleMultiple import mpSampleMultiple,mpSampleMultipleTime
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.ndimage.filters as fl
@@ -14,6 +14,7 @@ from lifeDist import lifeDist
 from mpmath import *
 import time
 from meanMedian import meanMedian
+from IO import save,readFile
 
 size = 1000;
 
@@ -24,7 +25,7 @@ Fplanets = mpLogUniform(0.1, 1, size)
 Nhabitable = mpLogUniform(0.1, 1, size)
 # Flife = lognormal(10**(-40),1,size)
 # Flife = loguniform(1,1000,size)
-# Flife = (0,1,lifeDist(size))
+Flife = (0,1,lifeDist(size))
 Fintelligence = mpLogUniform(0.001, 1, size)
 Fcivilization = mpLogUniform(0.01, 1, size)
 Length = mpLogUniform(100, 10000000000, size)
@@ -49,11 +50,13 @@ Length = ot.LogUniform(100,10000000000)
 '''
 
 # (xaxis, final) = sampleMultiple([Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length],size,1000)
-(xaxis, final) = mpSampleMultiple([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length], size, 1000)
+(xaxis, final) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable,Flife, Fintelligence, Fcivilization, Length], size, 10)
 # (xaxis, final) = sampleMultiple([Flife],size,10000)
 
 # tog = [Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length]
 # (xaxis, final) = sampleMultiple(tog[0:4],size,1000)
+
+save(xaxis,final,(time.time() - timeStart),'test')
 
 final = fl.gaussian_filter(final, 5)
 (mean, median) = meanMedian(final, xaxis)
