@@ -25,9 +25,10 @@ def lifeDist(size, times):
     izpis = 0
     mp.dps = 230
     for i in range (0, times):
-        if i % (times / 10) == 0:
+        ''' if i % (times / 10) == 0:
             print(izpis, "% lifeDist")
             izpis += 10
+        '''
         val = mpf('1')
         val *= sample(lamb)
         val *= sample(V)
