@@ -6,6 +6,8 @@ Created on 8 Aug 2018
 import random
 import numpy as np
 from mpmath import *
+from mpLogspace import mpLogspace
+from logHistogramAdd import logHistogramAdd
 
 def mpSampleMultiple(parameters,size,times):
     dist = [0]*size
@@ -25,7 +27,7 @@ def mpSampleMultiple(parameters,size,times):
                 print("ZERO\n")
             '''
             val *= newVal
-        dist = add(dist,size,val)
+        dist = logHistogramAdd(-40,15,size,dist,val)
         if t%(times/10) == 0:
             print(izpis,"%")
             izpis+=10
@@ -50,6 +52,7 @@ def scale(size):
         scale[i] = 10**(start+step*i)
     return scale
 
+'''
 def add(dist,size, value):
     step = mpf(55/size)
     start = mpf('-40')
@@ -58,21 +61,17 @@ def add(dist,size, value):
         if value<current:
             dist[i-1]+=1
             return dist
-        
+'''
 
 
 
 def sample(distribution):
     rand = random.random()
     length = len(distribution[2])
-    beg = distribution[0]
-    end = distribution[1]
-    lin = mp.linspace(distribution[0], distribution[1], len(distribution[2]))
+    lin = mpLogspace(distribution[0], distribution[1], length)
     cumulSum = mpf('0')
-    distance = beg
     for i in range(0,length-1):
         cumulSum += distribution[2][i]
         if cumulSum > rand:
             return lin[i]
-    return distance
-    
+    return distribution[1]

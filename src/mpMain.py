@@ -13,20 +13,21 @@ import scipy.ndimage.filters as fl
 from lifeDist import lifeDist
 from mpmath import *
 import time
+from meanMedian import meanMedian
 
 size = 1000;
 
 timeStart = time.time()
 
-Rstar = mpLogUniform(1,100,size)
-Fplanets = mpLogUniform(0.1,1,size)
-Nhabitable = mpLogUniform(0.1,1,size)
-#Flife = lognormal(10**(-40),1,size)
-#Flife = loguniform(1,1000,size)
-#Flife = (0,1,lifeDist(size))
-Fintelligence = mpLogUniform(0.001,1,size)
-Fcivilization = mpLogUniform(0.01,1,size)
-Length = mpLogUniform(100,10000000000,size)
+Rstar = mpLogUniform(1, 100, size)
+Fplanets = mpLogUniform(0.1, 1, size)
+Nhabitable = mpLogUniform(0.1, 1, size)
+# Flife = lognormal(10**(-40),1,size)
+# Flife = loguniform(1,1000,size)
+# Flife = (0,1,lifeDist(size))
+Fintelligence = mpLogUniform(0.001, 1, size)
+Fcivilization = mpLogUniform(0.01, 1, size)
+Length = mpLogUniform(100, 10000000000, size)
 
 '''
 Rstar = ot.LogUniform(1,100)
@@ -47,36 +48,19 @@ Length = ot.LogUniform(100,10000000000)
 
 '''
 
+# (xaxis, final) = sampleMultiple([Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length],size,1000)
+(xaxis, final) = mpSampleMultiple([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length], size, 1000)
+# (xaxis, final) = sampleMultiple([Flife],size,10000)
 
-#(xaxis, final) = sampleMultiple([Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length],size,1000)
-(xaxis, final) = mpSampleMultiple([Rstar,Fplanets,Nhabitable,Fintelligence,Fcivilization,Length],size,1000)
-#(xaxis, final) = sampleMultiple([Flife],size,10000)
+# tog = [Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length]
+# (xaxis, final) = sampleMultiple(tog[0:4],size,1000)
 
+final = fl.gaussian_filter(final, 5)
+(mean, median) = meanMedian(final, xaxis)
 
-#tog = [Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length]
-#(xaxis, final) = sampleMultiple(tog[0:4],size,1000)
-
-
-final = fl.gaussian_filter(final,5)
-mean = 0
-sum = 0
-median = [0]*size
-sumNo = 0
-for p in range(1,len(final)):
-    print(xaxis[p]," - ",final[p])
-    mean += p*final[p]*(xaxis[p]-xaxis[p-1])
-    sum += final[p]*(xaxis[p]-xaxis[p-1])
-    if final[p]!=0 :
-        median[sumNo]=xaxis[p]
-        sumNo+=1
-
-
-print("time: ",(time.time()-timeStart))
-print("\nMean: ",xaxis[int(mean/sum)],"\nMedian: ",median[int(sumNo/2)])
-plt.plot(xaxis,final)
+print("time: ", (time.time() - timeStart))
+print("\nMean: ", mean, "\nMedian: ", median)
+plt.plot(xaxis, final)
 plt.xscale("log")
 plt.show()
-
-
-
 

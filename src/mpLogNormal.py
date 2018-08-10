@@ -9,6 +9,7 @@ from math import *
 from mpmath import *
 import matplotlib.pyplot as plt
 mp.dps = 5
+from mpLogspace import mpLogspace
 
 def mpLogNormal(low=0.000000000000000000001, high=1, size=1000, median=1.0, sigma=mpmathify(10**50) ):
     low = mpmathify(10**(-188))
@@ -30,13 +31,13 @@ def mpLogNormal(low=0.000000000000000000001, high=1, size=1000, median=1.0, sigm
 
     return (min, max, pdf)
     '''
-    pdf = mp.linspace(low, high, size)
-    sum = mpf('0')
+    pdf = mpLogspace(low, high, size)
+    #summ = mpf('0')
     for i in range(0,len(pdf)):
         #pdf[i] = mpf('1.0')/(pdf[i] * (mp.log(high)- mp.log(low)))
         pdf[i] = (mp.exp(-(mp.log(pdf[i]) - mu) ** 2 / (2 * sigma * sigma )) / (pdf[i] * sigma * mp.sqrt(2 * mp.pi)))
-        sum += pdf[i]
-    return  (low,high,[x/sum for x in pdf])
+        #summ = mp.fadd(summ,pdf[i])
+    return  (low,high,[x/mp.fsum(pdf) for x in pdf])
 '''
 size = 1000
 x = mp.linspace(mpf('10')**(-188) , mpf('1'), size)
@@ -47,13 +48,13 @@ low = mpf('10') ** (-188)
 print(low)
 
 '''
-
-size = 1000
+'''
+size = 10
 low = mpmathify(mpf('10')**(-188))
 high = mpf('1.0')
-x = mp.linspace(log(low) , log(high), size)
-x = [ exp(kos) for kos in x]
-lamb = mpLogNormal( mpf('10')**(-188) , mpf('1'), size, mpf('1'), mpmathify(10**50) )[2]
+x = mp.linspace(mp.log(low) , mp.log(high), size)
+x = [ mp.exp(kos) for kos in x]
+lamb = mpLogNormal( mp.log(mpf('10')**(-188)) , mp.log(mpf('1')), size, mpf('1'), mpmathify(10**50) )[2]
 print(x)
 print(lamb)
 plt.plot(x, lamb)
@@ -62,5 +63,5 @@ plt.xlim(10**(-188),1)
 plt.show()
 #plot(lamb, xlim=[low, high])
 
-
+'''
 
