@@ -56,7 +56,7 @@ Length = ot.LogUniform(100,10000000000)
 # tog = [Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length]
 # (xaxis, final) = sampleMultiple(tog[0:4],size,1000)
 
-save(xaxis,final,(time.time() - timeStart),'test')
+save(xaxis,final,(time.time() - timeStart),'firstTry')
 
 final = fl.gaussian_filter(final, 5)
 (mean, median) = meanMedian(final, xaxis)
