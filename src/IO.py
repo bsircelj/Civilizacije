@@ -25,9 +25,9 @@ def readFile(filename):
     
     for i in range(0,size):
         line = lines[i].split(';')
-        x[i] = int(line[0])
+        x[i] = float(line[0])
         y[i] = line[1]
-        y[i] = int(y[i][0:-1])
+        y[i] = float(y[i][0:-1])
     
     file.close()
     return (x,y)
