@@ -130,15 +130,15 @@ def sampleByBisection( stdDistribution ):
 
     a = 0
     b = stdDistribution[0] - 1                  #length - 1
-    c = np.rint( ( a + b ) / 2 )                #rounding to the next int.
+    c = int(round((a+b)/2))           #rounding to the next int.
     while (b != a):
-        if (distribution[3][c] <= randFloat and distribution[3][c + 1] > randFloat ):
+        if (stdDistribution[3][c] <= randFloat and stdDistribution[3][c + 1] > randFloat ):
             return stdDistribution[1][c]
-        elif distribution[3][c] <= randFloat :
+        elif stdDistribution[3][c] <= randFloat :
             a = c
         else :
             b = c
-        c = (a+b)/ 2.0
+        c = int(round((a+b)/2))
         
     return stdDistribution[1][b]
     

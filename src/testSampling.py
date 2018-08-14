@@ -25,8 +25,9 @@ times = 1000
 
 
 yS = [0]*size
+std = StandardiseDistribution(dist)
 for i in range(0,times):
-    val = sampleByBisection(StandardiseDistribution(dist))
+    val = sampleByBisection(std)
     #val = sample(dist)
     
     for p in range(0,size):
