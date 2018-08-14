@@ -92,3 +92,57 @@ def sample(distribution):
         if cumulSum > rand:
             return lin[i]
     return distribution[1]
+
+
+def StandardiseDistribution (distribution):
+    length = len(distribution[2])
+    logXarray = mpLogspace( distribution[0], distribution[1], length )
+    
+    surface = mpf('0')
+    cdf=[surface]
+    pdf=[None] * length
+    for i in range(1,length):
+        surface += (logXarray[i]-logXarray[i-1])*distribution[2][i]
+        cdf.append(surface)                                            #eventually get cdf
+    
+
+    for i in range(0, length):
+        pdf[i]= distribution[2][i]                            #normalize pdf and cdf ( now: surface = 1 )
+        cdf[i] = cdf[i] / surface
+    stdDistribution = (length, logXarray, distribution[2], cdf )
+    return stdDistribution
+    
+
+def getSurface( distribution ):
+    length = len(distribution[2])                                       
+    logXarray = mpLogspace(distribution[0], distribution[1], length)    
+    
+    surface = mpf('0')
+    cdf = [surface]
+    for i in range(1,length - 1):
+        surface += (logXarray[i]-logXarray[i-1])*distribution[2][i]
+    
+    return surface
+    
+
+def sampleByBisection( stdDistribution ):
+    randFloat = random.random()
+
+    a = 0
+    b = stdDistribution[0] - 1                  #length - 1
+    c = np.rint( ( a + b ) / 2 )                #rounding to the next int.
+    while (b != a):
+        if (distribution[3][c] <= randFloat and distribution[3][c + 1] > randFloat ):
+            return stdDistribution[1][c]
+        elif distribution[3][c] <= randFloat :
+            a = c
+        else :
+            b = c
+        c = (a+b)/ 2.0
+        
+    return stdDistribution[1][b]
+    
+    
+
+    
+    
