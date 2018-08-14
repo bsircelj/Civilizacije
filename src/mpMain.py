@@ -17,7 +17,7 @@ from meanMedian import meanMedian
 from IO import save,readFile
 from mpUniform import mpUniform
 
-size = 100000;
+size = 10000;
 #size=500;
 
 timeStart = time.time()
@@ -53,7 +53,7 @@ Length = ot.LogUniform(100,10000000000)
 '''
 
 # (xaxis, final) = sampleMultiple([Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length],size,1000)
-(xaxis, final) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length], size, 150000)
+(xaxis, final) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable,Flife, Fintelligence, Fcivilization, Length], size, 150000)
 # (xaxis, final) = sampleMultiple([Flife],size,10000)
 
 # tog = [Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length]
