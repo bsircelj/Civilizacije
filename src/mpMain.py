@@ -6,7 +6,7 @@ Created on 8 Aug 2018
 
 from mpLogUniform import mpLogUniform
 from mpLogNormal import mpLogNormal
-from mpSampleMultiple import mpSampleMultiple,mpSampleMultipleTime
+from mpSampleMultiple import mpSampleMultiple, mpSampleMultipleTime
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.ndimage.filters as fl
@@ -14,14 +14,27 @@ from lifeDist import lifeDist
 from mpmath import *
 import time
 from meanMedian import meanMedian
-from IO import save,readFile
+from IO import save, readFile
 from mpUniform import mpUniform
 
 size = 10000;
-#size=500;
+# size=500;
 
 timeStart = time.time()
 
+Rstar = mpUniform(1, 100, size)
+Fplanets = mpUniform(0.1, 1, size)
+Nhabitable = mpUniform(0.1, 1, size)
+# Flife = lognormal(10**(-40),1,size)
+# Flife = loguniform(1,1000,size)
+# Flife = (0,1,lifeDist(size,size/2))
+Flife = mpUniform(mpmathify(10 ** (-156)), 1, size)
+Fintelligence = mpUniform(0.001, 1, size)
+Fcivilization = mpUniform(0.01, 1, size)
+Length = mpUniform(100, 10000000000, size)
+
+'''
+LOGUNIFORM
 Rstar = mpLogUniform(1, 100, size)
 Fplanets = mpLogUniform(0.1, 1, size)
 Nhabitable = mpLogUniform(0.1, 1, size)
@@ -32,36 +45,18 @@ Flife = mpUniform(mpmathify(10**(-156)),1,size)
 Fintelligence = mpLogUniform(0.001, 1, size)
 Fcivilization = mpLogUniform(0.01, 1, size)
 Length = mpLogUniform(100, 10000000000, size)
-
-'''
-Rstar = ot.LogUniform(1,100)
-graph = Rstar.drawPDF()
-
-graph.setLogScale(ot.GraphImplementation.LOGX)
-view = View(graph, plot_kwargs={'color':'blue'})
-view.save('curve.png', dpi=100)
-view.show()
-
-Fplanets = ot.LogUniform(0.1,1)
-Nhabitable = ot.LogUniform(0.1,1)
-#Flife = ot.lognormal(10**(-200),1)
-Flife = ot.LogUniform(1,1000)
-Fintelligence = ot.LogUniform(0.001,1)
-Fcivilization = ot.LogUniform(0.01,1)
-Length = ot.LogUniform(100,10000000000)
-
 '''
 
 # (xaxis, final) = sampleMultiple([Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length],size,1000)
-(xaxis, final) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable,Flife, Fintelligence, Fcivilization, Length], size, 150000)
+(xaxis, final) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Flife, Fintelligence, Fcivilization, Length], size, 60000)
 # (xaxis, final) = sampleMultiple([Flife],size,10000)
 
 # tog = [Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length]
 # (xaxis, final) = sampleMultiple(tog[0:4],size,1000)
 
-save(xaxis,final,(time.time() - timeStart),'test')
+save(xaxis, final, (time.time() - timeStart), 'All uniform in logspace')
 
-#final = fl.gaussian_filter(final, 5)
+# final = fl.gaussian_filter(final, 5)
 (mean, median) = meanMedian(final, xaxis)
 
 print("time: ", (time.time() - timeStart))
