@@ -11,13 +11,13 @@ from logHistogramAdd import logHistogramAdd
 import time
 
 
-def mpSampleMultiple(parameters,size,times):
+def mpSampleMultiple(parameters,minExp,maxExp,size,times):
     dist = [0]*size
     izpis=0
     for t in range(0,times):
         val = mpf('1.0')
         for p in parameters:
-            newVal = sample(p)
+            newVal = sampleUniform(p)
             #newVal = p.getSample(1)
             '''
             print(newVal)
@@ -29,28 +29,28 @@ def mpSampleMultiple(parameters,size,times):
                 print("ZERO\n")
             '''
             val *= newVal
-        dist = logHistogramAdd(-40,15,size,dist,val)
+        dist = logHistogramAdd(minExp,maxExp,size,dist,val)
         if t%(times/10) == 0:
             print(izpis,"%")
             izpis+=10
             
     #return normalize(scale(size),dist)
-    return (scale(size),dist)
+    return (scale(minExp,maxExp,size),dist)
 
-def mpSampleMultipleTime(parameters,size,timeLimit):
+def mpSampleMultipleTime(parameters,minExp,maxExp,size,timeLimit):
     dist = [0]*size
     timeStart = time.time()
     while True:
         val = mpf('1.0')
         for p in parameters:
-            newVal = sample(p)
+            newVal = sampleUniform(p)
             val *= newVal
-        dist = logHistogramAdd(-40,15,size,dist,val)
+        dist = logHistogramAdd(minExp,maxExp,size,dist,val)
         if time.time()-timeStart>timeLimit:
             break  
             
     #return normalize(scale(size),dist)
-    return (scale(size),dist)
+    return (scale(minExp,maxExp,size),dist)
 
 def normalize(xaxis, dist):
     surface = mpf('0')
@@ -61,10 +61,10 @@ def normalize(xaxis, dist):
     return (xaxis, newDist)
     
         
-def scale(size):
+def scale(minExp,maxExp,size):
     scale = [0]*size
-    step = 55/size
-    start = -40
+    step = (maxExp-minExp)/size
+    start = minExp
     for i in range(1,size):
         scale[i] = 10**(start+step*i)
     return scale
@@ -141,6 +141,10 @@ def sampleByBisection( stdDistribution ):
         c = int(round((a+b)/2))
         
     return stdDistribution[1][b]
+
+def sampleUniform(dist):
+    xaxis = mpLogspace(dist[0],dist[1],len(dist[2]))
+    return xaxis[random.randint(0,len(dist[2])-1)]
     
     
 

@@ -11,13 +11,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.ndimage.filters as fl
 from lifeDist import lifeDist
-from mpmath import *
+from mpmath import mpmathify
 import time
 from meanMedian import meanMedian
 from IO import save, readFile
 from mpUniform import mpUniform
 
-size = 10000;
+size = 500;
 # size=500;
 
 timeStart = time.time()
@@ -48,20 +48,23 @@ Length = mpLogUniform(100, 10000000000, size)
 '''
 
 # (xaxis, final) = sampleMultiple([Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length],size,1000)
-(xaxis, final) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Flife, Fintelligence, Fcivilization, Length], size, 60000)
+(xaxis, yaxis) = mpSampleMultiple([Rstar, Fplanets, Nhabitable, Flife, Fintelligence, Fcivilization, Length],-160,10, size, 100)
 # (xaxis, final) = sampleMultiple([Flife],size,10000)
 
 # tog = [Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length]
 # (xaxis, final) = sampleMultiple(tog[0:4],size,1000)
 
-save(xaxis, final, (time.time() - timeStart), 'All uniform in logspace')
+save(xaxis, yaxis, (time.time() - timeStart), 'Uniform sampling test')
 
-# final = fl.gaussian_filter(final, 5)
-(mean, median) = meanMedian(final, xaxis)
+
+(mean, median) = meanMedian(xaxis, yaxis)
 
 print("time: ", (time.time() - timeStart))
 print("\nMean: ", mean, "\nMedian: ", median)
-plt.plot(xaxis, final)
+
+#yaxis = fl.gaussian_filter(yaxis, 10)
+
+plt.plot(xaxis, yaxis)
 plt.xscale("log")
 plt.show()
 

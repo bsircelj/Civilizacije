@@ -10,9 +10,9 @@ import scipy.ndimage.filters as fl
 import matplotlib.pyplot as plt
 from createGraph import createGraph
 
-(xaxis,final) = readFile("firstTry.csv")
+(xaxis,final) = readFile("Uniform sampling test.csv")
 
-final = fl.gaussian_filter(final, 200)
+final = fl.gaussian_filter(final, 5)
 
 (mean,median) = meanMedian(xaxis,final)
 
