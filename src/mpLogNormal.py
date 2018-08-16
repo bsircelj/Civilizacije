@@ -7,6 +7,7 @@ import numpy as np
 from math import *
 from mpmath import *
 import matplotlib.pyplot as plt
+from StandardizeDistribution import StandardizeDistribution
 mp.dps = 200
 from mpLogspace import mpLogspace
 
@@ -23,7 +24,7 @@ def mpLogNormal(low=mpmathify(10**(-188)), high=mpmathify(10**12), size=100000, 
         pdf[i] = pdf[i] / sum
 
 
-    return (low, high, pdf)
+    return StandardizeDistribution((low, high, pdf))
     
     
 

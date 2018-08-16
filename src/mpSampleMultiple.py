@@ -9,6 +9,7 @@ from mpmath import *
 from mpLogspace import mpLogspace
 from logHistogramAdd import logHistogramAdd
 import time
+from StandardizeDistribution import StandardiseDistribution
 
 
 def mpSampleMultiple(parameters,minExp,maxExp,size,times):
@@ -94,26 +95,7 @@ def sample(distribution):
     return distribution[1]
 
 
-def StandardiseDistribution (distribution):
-    length = len(distribution[2])
-    logXarray = mpLogspace( distribution[0], distribution[1], length )
-    
-    surface = mpf('0')
-    cdf=[surface]
-    pdf=[None] * length
-    for i in range(1,length):
-        surface += (logXarray[i]-logXarray[i-1])*distribution[2][i]
-        cdf.append(surface)                                            #eventually get cdf
-    
-
-    for i in range(0, length):
-        pdf[i]= distribution[2][i]                            #normalize pdf and cdf ( now: surface = 1 )
-        cdf[i] = cdf[i] / surface
-    stdDistribution = (length, logXarray, distribution[2], cdf )
-    return stdDistribution
-    
-
-def getSurface( distribution ):
+def getSurface( distribution ): # "Ce bo kdo rabu" - Jurij
     length = len(distribution[2])                                       
     logXarray = mpLogspace(distribution[0], distribution[1], length)    
     
@@ -143,8 +125,7 @@ def sampleByBisection( stdDistribution ):
     return stdDistribution[1][b]
 
 def sampleUniform(dist):
-    xaxis = mpLogspace(dist[0],dist[1],len(dist[2]))
-    return xaxis[random.randint(0,len(dist[2])-1)]
+    return dist[1][random.randint(0,dist[0])]
     
     
 
