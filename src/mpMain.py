@@ -17,7 +17,7 @@ from meanMedian import meanMedian
 from IO import save, readFile
 from mpUniform import mpUniform
 
-size = 500;
+size = 10000;
 # size=500;
 
 timeStart = time.time()
@@ -48,13 +48,13 @@ Length = mpLogUniform(100, 10000000000, size)
 '''
 
 # (xaxis, final) = sampleMultiple([Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length],size,1000)
-(xaxis, yaxis) = mpSampleMultiple([Rstar, Fplanets, Nhabitable, Flife, Fintelligence, Fcivilization, Length],-160,10, size, 100)
+(xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-40,10, size, 60000)
 # (xaxis, final) = sampleMultiple([Flife],size,10000)
 
 # tog = [Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length]
 # (xaxis, final) = sampleMultiple(tog[0:4],size,1000)
 
-save(xaxis, yaxis, (time.time() - timeStart), 'Uniform sampling test')
+save(xaxis, yaxis, (time.time() - timeStart), 'FL is one')
 
 
 (mean, median) = meanMedian(xaxis, yaxis)

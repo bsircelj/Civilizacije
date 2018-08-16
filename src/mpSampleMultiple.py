@@ -9,7 +9,7 @@ from mpmath import *
 from mpLogspace import mpLogspace
 from logHistogramAdd import logHistogramAdd
 import time
-from StandardizeDistribution import StandardiseDistribution
+from StandardizeDistribution import StandardizeDistribution
 
 
 def mpSampleMultiple(parameters,minExp,maxExp,size,times):
@@ -85,14 +85,14 @@ def add(dist,size, value):
 
 def sample(distribution):
     rand = random.random()
-    length = len(distribution[2])
-    lin = mpLogspace(distribution[0], distribution[1], length)
+    length = distribution[0]
+    #lin = mpLogspace(distribution[0], distribution[1], length)
     cumulSum = mpf('0')
     for i in range(0,length-1):
         cumulSum += distribution[2][i]
         if cumulSum > rand:
-            return lin[i]
-    return distribution[1]
+            return distribution[1][i]
+    return distribution[2][-1]
 
 
 def getSurface( distribution ): # "Ce bo kdo rabu" - Jurij
@@ -125,7 +125,7 @@ def sampleByBisection( stdDistribution ):
     return stdDistribution[1][b]
 
 def sampleUniform(dist):
-    return dist[1][random.randint(0,dist[0])]
+    return dist[1][random.randint(0,dist[0]-1)]
     
     
 

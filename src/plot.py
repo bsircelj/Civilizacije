@@ -10,13 +10,13 @@ import scipy.ndimage.filters as fl
 import matplotlib.pyplot as plt
 from createGraph import createGraph
 
-(xaxis,final) = readFile("Uniform sampling test.csv")
+(xaxis,yaxis) = readFile("Uniform sampling test.csv")
 
-final = fl.gaussian_filter(final, 5)
+yaxis = fl.gaussian_filter(yaxis, 5)
 
-(mean,median) = meanMedian(xaxis,final)
+(mean,median) = meanMedian(xaxis,yaxis)
 
-#print("\nMean: ", mean, "\nMedian: ", median)
+print("\nMean: ", mean, "\nMedian: ", median)
 
 #createGraph(xaxis,yaxis,start,end,size)
 
@@ -24,7 +24,7 @@ final = fl.gaussian_filter(final, 5)
 plt.figure(1)
 plt.title('Log Scale')
 plt.xscale("log")
-plt.plot(xaxis, final)
+plt.plot(xaxis, yaxis)
 
 plt.figure(2)
 
@@ -32,56 +32,56 @@ plt.subplot(4,2,1)
 fromN = 0.00001
 toN = 0.0001
 plt.title(str(fromN)+' - '+str(toN))
-(x,y) = createGraph(xaxis,final,fromN,toN,1000)
+(x,y) = createGraph(xaxis,yaxis,fromN,toN,1000)
 plt.plot(x,y)
 
 plt.subplot(4,2,2)
 fromN = 0.0001
 toN = 0.001
 plt.title(str(fromN)+' - '+str(toN))
-(x,y) = createGraph(xaxis,final,fromN,toN,1000)
+(x,y) = createGraph(xaxis,yaxis,fromN,toN,1000)
 plt.plot(x,y)
 
 plt.subplot(4,2,3)
 fromN = 0.001
 toN = 0.01
 plt.title(str(fromN)+' - '+str(toN))
-(x,y) = createGraph(xaxis,final,fromN,toN,1000)
+(x,y) = createGraph(xaxis,yaxis,fromN,toN,1000)
 plt.plot(x,y)
 
 plt.subplot(4,2,4)
 fromN = 0.01
 toN = 0.1
 plt.title(str(fromN)+' - '+str(toN))
-(x,y) = createGraph(xaxis,final,fromN,toN,1000)
+(x,y) = createGraph(xaxis,yaxis,fromN,toN,1000)
 plt.plot(x,y)
 
 plt.subplot(4,2,5)
 fromN = 0.1
 toN = 1
 plt.title(str(fromN)+' - '+str(toN))
-(x,y) = createGraph(xaxis,final,fromN,toN,1000)
+(x,y) = createGraph(xaxis,yaxis,fromN,toN,1000)
 plt.plot(x,y)
 
 plt.subplot(4,2,6)
 fromN = 1
 toN = 10
 plt.title(str(fromN)+' - '+str(toN))
-(x,y) = createGraph(xaxis,final,fromN,toN,1000)
+(x,y) = createGraph(xaxis,yaxis,fromN,toN,1000)
 plt.plot(x,y)
 
 plt.subplot(4,2,7)
 fromN = 10
 toN = 100
 plt.title(str(fromN)+' - '+str(toN))
-(x,y) = createGraph(xaxis,final,fromN,toN,1000)
+(x,y) = createGraph(xaxis,yaxis,fromN,toN,1000)
 plt.plot(x,y)
 
 plt.subplot(4,2,8)
 fromN = 100
 toN = 1000
 plt.title(str(fromN)+' - '+str(toN))
-(x,y) = createGraph(xaxis,final,fromN,toN,1000)
+(x,y) = createGraph(xaxis,yaxis,fromN,toN,1000)
 plt.plot(x,y)
 
 plt.tight_layout()
