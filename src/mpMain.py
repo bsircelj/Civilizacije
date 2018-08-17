@@ -17,11 +17,12 @@ from meanMedian import meanMedian
 from IO import save, readFile
 from mpUniform import mpUniform
 
-size = 10000;
+size = 1000;
 # size=500;
 
 timeStart = time.time()
-
+'''
+OLD
 Rstar = mpUniform(1, 100, size)
 Fplanets = mpUniform(0.1, 1, size)
 Nhabitable = mpUniform(0.1, 1, size)
@@ -33,7 +34,7 @@ Fintelligence = mpUniform(0.001, 1, size)
 Fcivilization = mpUniform(0.01, 1, size)
 Length = mpUniform(100, 10000000000, size)
 
-'''
+
 LOGUNIFORM
 Rstar = mpLogUniform(1, 100, size)
 Fplanets = mpLogUniform(0.1, 1, size)
@@ -47,24 +48,41 @@ Fcivilization = mpLogUniform(0.01, 1, size)
 Length = mpLogUniform(100, 10000000000, size)
 '''
 
-# (xaxis, final) = sampleMultiple([Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length],size,1000)
-(xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-40,10, size, 60000)
-# (xaxis, final) = sampleMultiple([Flife],size,10000)
+Rstar = (1, 100)
+Fplanets = (0.1, 1)
+Nhabitable = (0.1, 1)
+# Flife = lognormal(10**(-40),1,size)
+# Flife = loguniform(1,1000,size)
+# Flife = (0,1,lifeDist(size,size/2))
+#Flife = (mpmathify(10 ** (-156)), 1)
+Fintelligence = (0.001, 1)
+Fcivilization = (0.01, 1)
+Length = (100, 10000000000)
 
-# tog = [Rstar,Fplanets,Nhabitable,Flife,Fintelligence,Fcivilization,Length]
-# (xaxis, final) = sampleMultiple(tog[0:4],size,1000)
+Flife = (1,-35,15,14,17,0,50)
 
+(xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-40,10, size, 100000,Flife)
+save(xaxis, yaxis, (time.time() - timeStart), 'sigma is 50')
+
+Flife = (1,-35,15,14,17,0,14)
+
+(xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-40,10, size, 100000,Flife)
+save(xaxis, yaxis, (time.time() - timeStart), 'sigma is 14')
+
+Flife = (0,-35,15,14,17,0,10**50)
+
+(xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-40,10, size, 40000,Flife)
 save(xaxis, yaxis, (time.time() - timeStart), 'FL is one')
-
 
 (mean, median) = meanMedian(xaxis, yaxis)
 
-print("time: ", (time.time() - timeStart))
-print("\nMean: ", mean, "\nMedian: ", median)
+print("done")
+#print("time: ", (time.time() - timeStart))
+#print("\nMean: ", mean, "\nMedian: ", median)
 
 #yaxis = fl.gaussian_filter(yaxis, 10)
 
-plt.plot(xaxis, yaxis)
-plt.xscale("log")
-plt.show()
+#plt.plot(xaxis, yaxis)
+#plt.xscale("log")
+#plt.show()
 

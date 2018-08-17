@@ -12,7 +12,8 @@ def createGraph(xaxis,yaxis,start,end,size):
     index = 0
     
     for i in range(0,len(xaxis)-1):
-        while xaxis[i]<newLocations[index] and newLocations[index]<xaxis[i+1]:
+        #print(xaxis[i]," - ", newLocations[index]," - ",xaxis[i+1])
+        while xaxis[i]<=newLocations[index] and newLocations[index]<xaxis[i+1]:
             y1 = yaxis[i]
             x1 = xaxis[i]
             y2 = yaxis[i+1]
@@ -21,9 +22,8 @@ def createGraph(xaxis,yaxis,start,end,size):
             graph[index] = k*newLocations[index]+(y1-k*x1)
             index+=1
             if index >= len(newLocations)-1:
-                return (newLocations,graph)
-            
-    return (newLocations,graph)
+                return (newLocations[0:-1],graph[0:-1])
+    return (newLocations[0:-1],graph[0:-1])
             
             
             

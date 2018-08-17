@@ -10,7 +10,7 @@ import scipy.ndimage.filters as fl
 import matplotlib.pyplot as plt
 from createGraph import createGraph
 
-(xaxis,yaxis) = readFile("Uniform sampling test.csv")
+(xaxis,yaxis) = readFile("sigma ten on fifty.csv")
 
 yaxis = fl.gaussian_filter(yaxis, 5)
 
@@ -72,14 +72,14 @@ plt.plot(x,y)
 
 plt.subplot(4,2,7)
 fromN = 10
-toN = 100
+toN = 1000
 plt.title(str(fromN)+' - '+str(toN))
 (x,y) = createGraph(xaxis,yaxis,fromN,toN,1000)
 plt.plot(x,y)
 
 plt.subplot(4,2,8)
-fromN = 100
-toN = 1000
+fromN = 1000
+toN = 100000
 plt.title(str(fromN)+' - '+str(toN))
 (x,y) = createGraph(xaxis,yaxis,fromN,toN,1000)
 plt.plot(x,y)
