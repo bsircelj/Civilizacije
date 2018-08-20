@@ -58,21 +58,21 @@ Nhabitable = (0.1, 1)
 Fintelligence = (0.001, 1)
 Fcivilization = (0.01, 1)
 Length = (100, 10000000000)
-
+'''
 Flife = (1,-35,15,14,17,0,50)
 
-(xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-100,10, size, 100000,Flife)
-save(xaxis, yaxis, (time.time() - timeStart), 'sigma is 50')
+(xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-100,10, size, 1800,Flife)
+save(xaxis, yaxis, (time.time() - timeStart), 'sigma is 50 h')
 
 Flife = (1,-35,15,14,17,0,14)
 
 (xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-40,10, size, 100000,Flife)
 save(xaxis, yaxis, (time.time() - timeStart), 'sigma is 14')
+'''
+Flife = (1,-35,15,14,17,0,10**50)
 
-Flife = (0,-35,15,14,17,0,10**50)
-
-(xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-40,10, size, 40000,Flife)
-save(xaxis, yaxis, (time.time() - timeStart), 'FL is one')
+(xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-100,15, size, 1000,Flife)
+save(xaxis, yaxis, (time.time() - timeStart), 'big sigma')
 
 (mean, median) = meanMedian(xaxis, yaxis)
 
