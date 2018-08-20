@@ -3,8 +3,9 @@ import mpmath as mp
 import random
 from mpmath import mpmathify
 import matplotlib.pyplot as plt
-mp.dps=8
+#mp.dps=8
 size = 100000
+pdfSize = 1000
 one = mpmathify(1.0)
 hundretBilion = 100000000000
 
@@ -14,7 +15,7 @@ def getArrayOfProducts(size):
     
     for j in range(0, size ):
         
-        parameters = mpmathify(1.0)
+        parameters = 1
         for i in range(0,9):
             r = random.uniform(0, 0.2)
             parameters *= r
@@ -22,10 +23,10 @@ def getArrayOfProducts(size):
         parameters = parameters * ( 100000000000 )  
         #if parameters<1:
         #    stevecManjsihOd1+=1
-        stevecManjsihOd1+=(parameters<0.7)
+        stevecManjsihOd1+=(parameters<1)
         alonePossibility = stevecManjsihOd1/size
         arrayOfParameters.append( parameters )
-    return (arrayOfParameters, alonePossibility )
+    return (arrayOfParameters, alonePossibility, )
 
 alonePossibility = getArrayOfProducts(size)[1]
 print(alonePossibility)
