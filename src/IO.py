@@ -5,18 +5,14 @@ Created on 8 Aug 2018
 '''
 
 
-def save(x,y,time,filename):
-    file = open(filename+'.csv', 'w')
+def save(x,y,filename):
+    file = open('data/'+filename+'.csv', 'w')
     for i in range(0,len(x)):
         file.write(str(x[i])+';'+str(y[i])+'\n')
     file.close()
-    logFile = open(filename+'.log','w')
-    logFile.write(filename+'\n')
-    logFile.write('Time spent: '+str(time)+'s')
-    logFile.close()
     
 def readFile(filename):
-    file = open(filename,'r')
+    file = open('data/'+filename,'r')
     lines = file.readlines()
     
     size = len(lines)
