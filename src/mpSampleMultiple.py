@@ -40,6 +40,17 @@ def sampleMultiple(parameters, minExp, maxExp, size,dist,life):
     dist = logHistogramAdd(minExp, maxExp, size, dist, val)
     return dist
 
+def sampleL(parameters,minExp,maxExp,size,dist,life):
+    val = mpf('1.0')
+    for p in parameters:
+        newVal = sample(p)
+        val *= newVal
+    if(life[0]):
+        val *= lifeDist(life[1],life[2],life[3],life[4],life[5],life[6])
+    val = 1/val
+    dist = logHistogramAdd(minExp, maxExp, size, dist, val)
+    return dist
+
 def sample(dist):
     r = random.uniform(mp.log(dist[0]), mp.log(dist[1]))
     return mp.exp(r)

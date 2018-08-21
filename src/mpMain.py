@@ -59,11 +59,17 @@ Fintelligence = (0.001, 1)
 Fcivilization = (0.01, 1)
 Length = (100, 10000000000)
 
-Flife = (1,-35,15,14,17,0,70)
+Flife = (1,-35,15,14,17,0,50)
+(xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization],-100,10, size, 900,Flife)
+save(xaxis, yaxis, 'What is L')
 
+'''
+Flife = (1,-35,15,14,17,0,70)
 (xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-100,10, size, 50000,Flife)
 save(xaxis, yaxis, 'sigma is 70')
-'''
+
+
+
 Flife = (1,-35,15,14,17,0,14)
 
 (xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-40,10, size, 100000,Flife)
