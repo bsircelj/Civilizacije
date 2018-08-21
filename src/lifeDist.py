@@ -4,8 +4,6 @@ Created on 7 Aug 2018
 @author: benos
 '''
 import random
-from mpLogNormal import mpLogNormal
-from mpLogUniform import mpLogUniform
 import numpy as np
 import matplotlib.pyplot as plt
 from mpmath import mpmathify,mp,mpf

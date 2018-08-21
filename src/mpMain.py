@@ -4,8 +4,6 @@ Created on 8 Aug 2018
 @author: benos
 '''
 
-from mpLogUniform import mpLogUniform
-from mpLogNormal import mpLogNormal
 from mpSampleMultiple import mpSampleMultiple, mpSampleMultipleTime
 import numpy as np
 import matplotlib.pyplot as plt
@@ -15,7 +13,6 @@ from mpmath import mpmathify
 import time
 from meanMedian import meanMedian
 from IO import save, readFile
-from mpUniform import mpUniform
 
 size = 10000;
 # size=500;
