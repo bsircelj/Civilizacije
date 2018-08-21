@@ -6,90 +6,93 @@ import matplotlib.pyplot as plt
 from mpLogspace import mpLogspace
 import scipy.ndimage.filters as fl
 from IO import save
-#mp.dps=8
-size = 100000
-pdfSize = 10001
-one = mpmathify(1.0)
-hundretBilion = 100000000000
 
-def getArrayOfProducts(size, pdfSize):   #WARNING: PDFSIZE MUST BE 101, 1001, OR 10001, ETC. 
+def getStandardTuple(size=100000, pdfSize=10001, low=0 , high=0.2, lowerThan = 1 ):   #WARNING: PDFSIZE MUST BE 101, 1001, OR 10001, ETC. 
     pdf= [0] * pdfSize
-    cdfNIC = []
-    cdfPLOSCINA = []
-    #print("pdf1:")
-    #print( pdf )
     arrayOfParameters =[]
     stevecManjsihOd1 = 0
     x = np.logspace(-5, 5, pdfSize )
+    
+    desetNaStDecimalk = ((pdfSize-1)/10)        # =1000
+    polOdArraya = desetNaStDecimalk * 5         # =5000
+    hundredBillions = 100000000000              # =100 000 000 000
     
     for j in range(0, size ):
         
         parameters = 1
         for i in range(0,9):
-            r = random.uniform(0, 0.2)
+            r = random.uniform(low, high)
             parameters *= r
             
-        parameters = parameters * ( 100000000000 )  
-        #if parameters<1:
-        #    stevecManjsihOd1+=1
-        stevecManjsihOd1+=(parameters<1)
-        alonePossibility = stevecManjsihOd1/size
+        parameters = parameters * ( hundredBillions )  
+        stevecManjsihOd1+=(parameters< lowerThan )
         arrayOfParameters.append( parameters )
         
-        pdf[int(round(np.log10(parameters)*1000)+5000)]+=1
+        pdf[int(round(np.log10(parameters)*desetNaStDecimalk + polOdArraya))]+=1
     
-    #pdf = fl.gaussian_filter(pdf, 10)
-    sumCDFNIC= 0
+    alonePossibility = stevecManjsihOd1/size
+    cdfNIC = getCDFNIC(pdf)
+    cdfPLOSCINA = getCDFPLOSCINA(x, pdf)
+    pdf = normalizePDF(pdf)
+
+    return (arrayOfParameters, alonePossibility, x, pdf, cdfNIC, cdfPLOSCINA)
+
+def getMaxPDF(pdf):
     maxPDF = 0
     for value in pdf:
-        sumCDFNIC+=value
-        cdfNIC.append(sumCDFNIC)
-        
         if value > maxPDF:
             maxPDF = value
-        
+    return maxPDF 
+
+def getCDFNIC(pdf):
+    cdfNIC = []
+    sumCDFNIC = 0
+    sumPDF = sum(pdf)
+    
+    for value in pdf:
+        sumCDFNIC+= value / sumPDF
+        cdfNIC.append(sumCDFNIC)
+    
+    return cdfNIC
+
+def getCDFPLOSCINA(x, pdf):
+    cdfPLOSCINA = [0.0]
     sumCDFPLOSCINA = 0
-    cdfPLOSCINA.append(0.0)
-    for i in range(1, pdfSize):
+    length = len(pdf)
+    
+    for i in range(1, length):
         sumCDFPLOSCINA+= ( x[i] - x[i-1] ) * pdf[i]
         cdfPLOSCINA.append( sumCDFPLOSCINA )
     
-    for i in range(0, pdfSize):
-        pdf[i] = pdf[i] / maxPDF
-        cdfNIC[i] = cdfNIC[i] / sumCDFNIC
-        cdfPLOSCINA[i]  = cdfPLOSCINA[i] / sumCDFPLOSCINA
-        
+    cdfMAX = cdfPLOSCINA[ length - 1 ]
+    for i in range(0,length):
+        cdfPLOSCINA[i] = cdfPLOSCINA[i] / cdfMAX
     
-    return (arrayOfParameters, alonePossibility, x, pdf, cdfNIC, cdfPLOSCINA)
+    return cdfPLOSCINA
 
-tuple = getArrayOfProducts(size, pdfSize)
-pdf = tuple[3]
-print(pdf)
-pdf = fl.gaussian_filter(pdf, 10)
-x = tuple[2]
-cdfNIC = tuple[4]
-cdfPLOSCINA = tuple[5]
-print("x:")
-print(x)
-print("pdf:")
-print(pdf)
-print("konec")
+def normalizePDF(pdf):
+    maxPDF = getMaxPDF(pdf)
+    length = len(pdf)
+    for i in range(0, length):
+        pdf[i] = pdf[i] / maxPDF
+    return pdf
 
-#plt.plot(x, cdfPLOSCINA , 'green')
-'''
-plt.plot(x, pdf, 'blue')
-plt.plot(x, cdfNIC , 'red')
-plt.xscale('log')
-plt.xlim(10**(-5), 10**5)
-plt.show()
-'''
+def fromEpsilonGetLowHigh(epsilon=0, option=1, low = 0.0, high = 0.2):
+    if option == 1:
+        low, high = 0, 0.2
 
-save(x, pdf, 0, 'ToyModelPDF')
-save(x, cdfPLOSCINA, 0, 'ToyModelCDF')
-'''
-pdfSize=10001 #mora bit +1 !
-x = np.logspace(-5, 5, pdfSize )
-for value in x:
-    print (int(round(np.log10(value)*1000)+5000) )
-'''
-#print(arrayOfProducts)
+    elif option == 2:
+        low, high = epsilon, 0.2
+        
+    elif option == 3:
+        low, high = 0.1 - epsilon , 0.1 + epsilon
+        
+    elif option == 4:
+        low, high = epsilon, 0.2 + epsilon
+        
+    else:
+        print("this option is not allowed.")
+        
+    return (low, high)
+
+
