@@ -7,7 +7,7 @@ from mpLogspace import mpLogspace
 import scipy.ndimage.filters as fl
 from IO import save
 
-def getStandardTuple(size=100000, pdfSize=10001, low=0 , high=0.2, lowerThan = 1 ):   #WARNING: PDFSIZE MUST BE 101, 1001, OR 10001, ETC. 
+def getStandardTuple(size=100000, pdfSize=10001, low=0 , high=0.2, lowerThan = 1, stParametrov = 9 ):   #WARNING: PDFSIZE MUST BE 101, 1001, OR 10001, ETC. 
     pdf= [0] * pdfSize
     arrayOfParameters =[]
     stevecManjsihOd1 = 0
@@ -20,7 +20,7 @@ def getStandardTuple(size=100000, pdfSize=10001, low=0 , high=0.2, lowerThan = 1
     for j in range(0, size ):
         
         parameters = 1
-        for i in range(0,9):
+        for i in range(0, stParametrov):
             r = random.uniform(low, high)
             parameters *= r
             
@@ -28,14 +28,33 @@ def getStandardTuple(size=100000, pdfSize=10001, low=0 , high=0.2, lowerThan = 1
         stevecManjsihOd1+=(parameters< lowerThan )
         arrayOfParameters.append( parameters )
         
-        pdf[int(round(np.log10(parameters)*desetNaStDecimalk + polOdArraya))]+=1
+        indeksPDF = int(round(np.log10(parameters)*desetNaStDecimalk + polOdArraya))
+        if indeksPDF < 0:
+            indeksPDF = 1
+        elif indeksPDF >= pdfSize:
+            indeksPDF = pdfSize - 1
+        pdf[indeksPDF]+=1
     
     alonePossibility = stevecManjsihOd1/size
+
     cdfNIC = getCDFNIC(pdf)
     cdfPLOSCINA = getCDFPLOSCINA(x, pdf)
     pdf = normalizePDF(pdf)
+    pdf = fl.gaussian_filter(pdf, 100)
+    pdf = normalizePDF(pdf)
 
     return (arrayOfParameters, alonePossibility, x, pdf, cdfNIC, cdfPLOSCINA)
+
+
+def getIndexMaxPDF(pdf):
+    length = len(pdf)
+    maxPDF = 0
+    index = 0
+    for i in range(0, length):
+        if (pdf[i] > maxPDF):
+            maxPDF = pdf[i]
+            index = i
+    return i
 
 def getMaxPDF(pdf):
     maxPDF = 0

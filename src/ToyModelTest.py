@@ -6,29 +6,52 @@ import matplotlib.pyplot as plt
 from mpLogspace import mpLogspace
 import scipy.ndimage.filters as fl
 from IO import save
-from ToyModel import getStandardTuple, getMaxPDF, getCDFNIC, getCDFPLOSCINA, normalizePDF
+from ToyModel import getStandardTuple, getMaxPDF, getCDFNIC, getCDFPLOSCINA, normalizePDF, getIndexMaxPDF 
 
 size = 100000
 pdfSize = 10001
-hundretBilion = 100000000000
 
 
-tuple = getStandardTuple(size, pdfSize)
+tuple = getStandardTuple(size, pdfSize, lowerThan=0.75 ,stParametrov = 9)
 pdf = tuple[3]
+'''
 print("pdf:")
 print(pdf)
-pdf = fl.gaussian_filter(pdf, 10)
+'''
 x = tuple[2]
+#pdf = fl.gaussian_filter(pdf, 100)
 cdfNIC = tuple[4]
 cdfPLOSCINA = tuple[5]
+
+'''
 print("x:")
 print(x)
 print("pdf:")
 print(pdf)
 print(tuple[1])
+'''
+index = 0
+length = len(pdf)
+maxPDF = 0
+index = 0
+for i in range(0, length):
+    if (pdf[i] > maxPDF):
+        maxPDF = pdf[i]
+        index = i
+'''
+print('Xvalue: '+str(x[ index ] ))
+'''
+
+#print(cdfPLOSCINA)
+arrayOfvalues = tuple[0]
+vsota = sum(arrayOfvalues)
+print('manjse od 0.75:' + str(tuple[1]))
+print(vsota/size)
+
+
 print("konec")
 
-#plt.plot(x, cdfPLOSCINA , 'green')
+plt.plot(x, cdfPLOSCINA , 'green')
 plt.plot(x, pdf, 'blue')
 plt.plot(x, cdfNIC , 'red')
 plt.xscale('log')
@@ -38,10 +61,3 @@ plt.show()
 
 #save(x, pdf, 'ToyModelPDF')
 #save(x, cdfPLOSCINA, 'ToyModelCDF')
-'''
-pdfSize=10001 #mora bit +1 !
-x = np.logspace(-5, 5, pdfSize )
-for value in x:
-    print (int(round(np.log10(value)*1000)+5000) )
-'''
-#print(arrayOfProducts)
