@@ -4,7 +4,7 @@ Created on 8 Aug 2018
 @author: benos
 '''
 
-from mpSampleMultiple import mpSampleMultiple, mpSampleMultipleTime
+from mpSampleMultiple import mpSampleMultiple, mpSampleMultipleTime, sampleL
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.ndimage.filters as fl
@@ -57,7 +57,7 @@ Fcivilization = (0.01, 1)
 Length = (100, 10000000000)
 
 Flife = (1,-35,15,14,17,0,50)
-(xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization],-100,10, size, 900,Flife)
+(xaxis, yaxis) = sampleL([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization],-100,10, size, 900,Flife)
 save(xaxis, yaxis, 'What is L')
 
 '''
