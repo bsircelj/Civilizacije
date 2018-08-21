@@ -57,8 +57,8 @@ Fcivilization = (0.01, 1)
 Length = (100, 10000000000)
 
 Flife = (1,-35,15,14,17,0,50)
-(xaxis, yaxis) = sampleL([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization],-100,10, size, 900,Flife)
-save(xaxis, yaxis, 'What is L')
+(xaxis, yaxis) = sampleL([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization],-100,10, size, 10,Flife)
+save(xaxis, yaxis, 'ten')
 
 '''
 Flife = (1,-35,15,14,17,0,70)
