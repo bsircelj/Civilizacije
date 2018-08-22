@@ -63,7 +63,7 @@ save(xaxis, yaxis, 'What is L with N1')
 '''
 Flife = (1,-35,15,14,17,0,100)
 (xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-120,15, size, 50000,Flife)
-save(xaxis, yaxis, 'sigma is 70')
+save(xaxis, yaxis, 'sigma is 100')
 
 
 '''
