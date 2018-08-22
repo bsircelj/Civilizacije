@@ -10,9 +10,9 @@ import scipy.ndimage.filters as fl
 import matplotlib.pyplot as plt
 from createGraph import createGraph
 
-(xaxis,yaxis) = readFile("What is L.csv")
+(xaxis,yaxis) = readFile("Sigma is 50 plus 1.csv")
 
-yaxis = fl.gaussian_filter(yaxis, 5)
+yaxis = fl.gaussian_filter(yaxis, 100)
 
 (mean,median) = meanMedian(xaxis,yaxis)
 

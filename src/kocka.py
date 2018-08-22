@@ -9,7 +9,9 @@ import random
 import matplotlib.pyplot as plt
 import scipy.ndimage.filters as fl
 import numpy as np
-# def getStandardTuple(size=100000, pdfSize=10001, low=0 , high=0.2, lowerThan = 1 ):   #WARNING: PDFSIZE MUST BE 101, 1001, OR 10001, ETC. 
+from ToyModel import getStandardTuple
+# def getStandardTuple(size=100000, pdfSize=10001, low=0 , high=0.2, lowerThan = 1, stParametrov = 9, start = -5, stop=5 ):
+#    return (arrayOfParameters, alonePossibility, x, pdf, cdfNIC, cdfPLOSCINA)
 
 
 def getSampleMult(start, end, no, times):
@@ -25,22 +27,33 @@ def getSampleMult(start, end, no, times):
     return avg
 
     
-size = 200
+size = 10000
 distE1 = [0] * size
 distE2 = [0] * size
 distE3 = [0] * size
-start = 0
-end = 1 / 3
+low = 0
+high = 1 / 3
 no = 9
 times = 10000
 goal = (1 / 6) ** no   
-epsMax = (1/6)**3
-epsX = [0]*size
+epsMax = (1 / 6) ** 3
+epsX = [0] * size
+
+hBil = 100000
 
 goalGraphY = [goal] * size
 goalGraphX = range(0, size)
+eps = (1/6)**2
 
+(arrayOfParameters, alonePossibility, x, pdf, cdfNIC, cdfPLOSCINA) = getStandardTuple(size, 10001, low, high, 1, no, -15, 0,1)
+pdf = fl.gaussian_filter(pdf, 10)
+plt.plot(x,pdf)
+plt.plot([goal,goal],[1,0],'r-')
+#plt.xscale('log')
+plt.xlim(0,10**-6)
+plt.show()
 
+'''
 # Case 1: e->
 # Case 2: e-> <-e
 # Case3: e-> e->
@@ -67,7 +80,7 @@ plt.plot(epsX,distE2,'blue')
 plt.plot(epsX,distE3,'yellow')
 #plt.xscale('log')
 plt.show()
-'''
+
 plt.figure(2)
 H1 = np.histogram(distE1,size)
 print(H1)
@@ -76,5 +89,4 @@ print(H1)
 plt.hist(H1,bins='auto')
 plt.show()
 '''
-
 
