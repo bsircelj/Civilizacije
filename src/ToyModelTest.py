@@ -13,6 +13,7 @@ pdfSize = 10001
 
 
 tuple = getStandardTuple(size, pdfSize, lowerThan=0.75 ,stParametrov = 9)
+
 pdf = tuple[3]
 '''
 print("pdf:")

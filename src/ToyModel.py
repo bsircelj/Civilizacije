@@ -7,15 +7,15 @@ from mpLogspace import mpLogspace
 import scipy.ndimage.filters as fl
 from IO import save
 
-def getStandardTuple(size=100000, pdfSize=10001, low=0 , high=0.2, lowerThan = 1, stParametrov = 9 ):   #WARNING: PDFSIZE MUST BE 101, 1001, OR 10001, ETC. 
+def getStandardTuple(size=100000, pdfSize=10001, low=0 , high=0.2, lowerThan = 1, stParametrov = 9, start = -5, stop=5 ):   #WARNING: PDFSIZE MUST BE 101, 1001, OR 10001, ETC. 
     pdf= [0] * pdfSize
     arrayOfParameters =[]
     stevecManjsihOd1 = 0
-    x = np.logspace(-5, 5, pdfSize )
+    x = np.logspace(start, stop , pdfSize )
     
-    desetNaStDecimalk = ((pdfSize-1)/10)        # =1000
-    polOdArraya = desetNaStDecimalk * 5         # =5000
-    hundredBillions = 100000000000              # =100 000 000 000
+    desetNaStDecimalk = ((pdfSize-1)/(stop-start))          #=1000
+    polOdArraya = start*desetNaStDecimalk                   # =5000
+    hundredBillions = 100000000000                          # =100 000 000 000
     
     for j in range(0, size ):
         
@@ -28,7 +28,7 @@ def getStandardTuple(size=100000, pdfSize=10001, low=0 , high=0.2, lowerThan = 1
         stevecManjsihOd1+=(parameters< lowerThan )
         arrayOfParameters.append( parameters )
         
-        indeksPDF = int(round(np.log10(parameters)*desetNaStDecimalk + polOdArraya))
+        indeksPDF = int(round(np.log10(parameters)*desetNaStDecimalk - polOdArraya))
         if indeksPDF < 0:
             indeksPDF = 1
         elif indeksPDF >= pdfSize:
@@ -114,4 +114,20 @@ def fromEpsilonGetLowHigh(epsilon=0, option=1, low = 0.0, high = 0.2):
         
     return (low, high)
 
+def getAlonePossibility(low=0, high=0.2, size=100000, lowerThan = 1, stParametrov = 9 ):
+    stevecManjsihOd1 = 0
+    hundredBillions = 100000000000                          # =100 000 000 000
+    
+    for j in range(0, size ):
+        
+        parameters = 1
+        for i in range(0, stParametrov):
+            r = random.uniform(low, high)
+            parameters *= r
+            
+        parameters = parameters * hundredBillions
+        stevecManjsihOd1+=(parameters< lowerThan )
+    
+    alonePossibility = stevecManjsihOd1/size
+    return alonePossibility
 
