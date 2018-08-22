@@ -7,35 +7,35 @@ from mpLogspace import mpLogspace
 import scipy.ndimage.filters as fl
 from IO import save
 
-def getStandardTuple(size=100000, pdfSize=10001, low=0 , high=0.2, lowerThan = 1, stParametrov = 9, start = -5, stop=5 ):   #WARNING: PDFSIZE MUST BE 101, 1001, OR 10001, ETC. 
-    pdf= [0] * pdfSize
-    arrayOfParameters =[]
+
+def getStandardTuple(size=100000, pdfSize=10001, low=0 , high=0.2, lowerThan=1, stParametrov=9, start=-5, stop=5, hundredBillions = 100000000000 ):  # WARNING: PDFSIZE MUST BE 101, 1001, OR 10001, ETC. 
+    pdf = [0] * pdfSize
+    arrayOfParameters = []
     stevecManjsihOd1 = 0
-    x = np.logspace(start, stop , pdfSize )
+    x = np.logspace(start, stop , pdfSize)
     
-    desetNaStDecimalk = ((pdfSize-1)/(stop-start))          #=1000
-    polOdArraya = start*desetNaStDecimalk                   # =5000
-    hundredBillions = 100000000000                          # =100 000 000 000
+    desetNaStDecimalk = ((pdfSize - 1) / (stop - start))  # =1000
+    polOdArraya = start * desetNaStDecimalk  # =5000
     
-    for j in range(0, size ):
+    for j in range(0, size):
         
         parameters = 1
         for i in range(0, stParametrov):
             r = random.uniform(low, high)
             parameters *= r
             
-        parameters = parameters * ( hundredBillions )  
-        stevecManjsihOd1+=(parameters< lowerThan )
-        arrayOfParameters.append( parameters )
+        parameters = parameters * (hundredBillions)  
+        stevecManjsihOd1 += (parameters < lowerThan)
+        arrayOfParameters.append(parameters)
         
-        indeksPDF = int(round(np.log10(parameters)*desetNaStDecimalk - polOdArraya))
+        indeksPDF = int(round(np.log10(parameters) * desetNaStDecimalk - polOdArraya))
         if indeksPDF < 0:
             indeksPDF = 1
         elif indeksPDF >= pdfSize:
             indeksPDF = pdfSize - 1
-        pdf[indeksPDF]+=1
+        pdf[indeksPDF] += 1
     
-    alonePossibility = stevecManjsihOd1/size
+    alonePossibility = stevecManjsihOd1 / size
 
     cdfNIC = getCDFNIC(pdf)
     cdfPLOSCINA = getCDFPLOSCINA(x, pdf)
@@ -56,6 +56,7 @@ def getIndexMaxPDF(pdf):
             index = i
     return i
 
+
 def getMaxPDF(pdf):
     maxPDF = 0
     for value in pdf:
@@ -63,16 +64,18 @@ def getMaxPDF(pdf):
             maxPDF = value
     return maxPDF 
 
+
 def getCDFNIC(pdf):
     cdfNIC = []
     sumCDFNIC = 0
     sumPDF = sum(pdf)
     
     for value in pdf:
-        sumCDFNIC+= value / sumPDF
+        sumCDFNIC += value / sumPDF
         cdfNIC.append(sumCDFNIC)
     
     return cdfNIC
+
 
 def getCDFPLOSCINA(x, pdf):
     cdfPLOSCINA = [0.0]
@@ -80,14 +83,15 @@ def getCDFPLOSCINA(x, pdf):
     length = len(pdf)
     
     for i in range(1, length):
-        sumCDFPLOSCINA+= ( x[i] - x[i-1] ) * pdf[i]
-        cdfPLOSCINA.append( sumCDFPLOSCINA )
+        sumCDFPLOSCINA += (x[i] - x[i - 1]) * pdf[i]
+        cdfPLOSCINA.append(sumCDFPLOSCINA)
     
     cdfMAX = cdfPLOSCINA[ length - 1 ]
-    for i in range(0,length):
+    for i in range(0, length):
         cdfPLOSCINA[i] = cdfPLOSCINA[i] / cdfMAX
     
     return cdfPLOSCINA
+
 
 def normalizePDF(pdf):
     maxPDF = getMaxPDF(pdf)
@@ -96,7 +100,8 @@ def normalizePDF(pdf):
         pdf[i] = pdf[i] / maxPDF
     return pdf
 
-def fromEpsilonGetLowHigh(epsilon=0, option=1, low = 0.0, high = 0.2):
+
+def fromEpsilonGetLowHigh(epsilon=0, option=1, low=0.0, high=0.2):
     if option == 1:
         low, high = 0, 0.2
 
@@ -114,11 +119,12 @@ def fromEpsilonGetLowHigh(epsilon=0, option=1, low = 0.0, high = 0.2):
         
     return (low, high)
 
-def getAlonePossibility(low=0, high=0.2, size=100000, lowerThan = 1, stParametrov = 9 ):
+
+def getAlonePossibility(low=0, high=0.2, size=100000, lowerThan=1, stParametrov=9):
     stevecManjsihOd1 = 0
-    hundredBillions = 100000000000                          # =100 000 000 000
+    hundredBillions = 100000000000  # =100 000 000 000
     
-    for j in range(0, size ):
+    for j in range(0, size):
         
         parameters = 1
         for i in range(0, stParametrov):
@@ -126,8 +132,8 @@ def getAlonePossibility(low=0, high=0.2, size=100000, lowerThan = 1, stParametro
             parameters *= r
             
         parameters = parameters * hundredBillions
-        stevecManjsihOd1+=(parameters< lowerThan )
+        stevecManjsihOd1 += (parameters < lowerThan)
     
-    alonePossibility = stevecManjsihOd1/size
+    alonePossibility = stevecManjsihOd1 / size
     return alonePossibility
 
