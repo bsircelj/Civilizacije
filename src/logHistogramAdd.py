@@ -17,3 +17,18 @@ def logHistogramAdd(start, end, size, dist, value):
             return dist
     dist[-1] += 1
     return dist
+
+
+def logHistogramAddMult(start, end, size, dist, value, mult, lastIndex):
+    start = mpf(start)
+    end = mpf(end)
+    step = mpf((end - start) / size)
+    for i in range(lastIndex, size):
+        current = mpmathify(10 ** (start + step * i))
+        if value < current:
+            dist[i - 1] += mult
+            lastIndex = i
+            return (lastIndex, dist)
+    dist[-1] += mult
+    lastIndex = size
+    return (lastIndex, dist)

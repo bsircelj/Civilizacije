@@ -51,22 +51,24 @@ Nhabitable = (0.1, 1)
 # Flife = lognormal(10**(-40),1,size)
 # Flife = loguniform(1,1000,size)
 # Flife = (0,1,lifeDist(size,size/2))
-#Flife = (mpmathify(10 ** (-156)), 1)
+# Flife = (mpmathify(10 ** (-156)), 1)
 Fintelligence = (0.001, 1)
 Fcivilization = (0.01, 1)
 Length = (100, 10000000000)
-'''
-Flife = (1,-35,15,14,17,0,50)
-(xaxis, yaxis) = sampleL([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization],-15,100, size,3600 ,Flife)
-save(xaxis, yaxis, 'What is L with N1')
+
+Flife = (1, -35, 15, 14, 17, 0, 50)
+N = readFile('sigma is 50.csv')
+(xaxis, yaxis) = sampleL([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization], -50, 70, size, 50000 , Flife, (1, N))
+save(xaxis, yaxis, 'What is L with N sig50')
 
 '''
 Flife = (1,-35,15,14,17,0,100)
+
 (xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-120,15, size, 50000,Flife)
 save(xaxis, yaxis, 'sigma is 100')
 
 
-'''
+
 Flife = (1,-35,15,14,17,0,14)
 
 (xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-40,10, size, 100000,Flife)
@@ -80,12 +82,12 @@ save(xaxis, yaxis, 'big sigma')
 (mean, median) = meanMedian(xaxis, yaxis)
 
 print("done")
-#print("time: ", (time.time() - timeStart))
-#print("\nMean: ", mean, "\nMedian: ", median)
+# print("time: ", (time.time() - timeStart))
+# print("\nMean: ", mean, "\nMedian: ", median)
 
-#yaxis = fl.gaussian_filter(yaxis, 10)
+# yaxis = fl.gaussian_filter(yaxis, 10)
 
-#plt.plot(xaxis, yaxis)
-#plt.xscale("log")
-#plt.show()
+# plt.plot(xaxis, yaxis)
+# plt.xscale("log")
+# plt.show()
 

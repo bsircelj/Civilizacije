@@ -9,6 +9,7 @@ from mpLogspace import mpLogspace
 from logHistogramAdd import logHistogramAdd
 import time
 from lifeDist import lifeDist
+from StandardizeDistribution import StandardizeDistribution
 
 def mpSampleMultiple(parameters, minExp, maxExp, size, times,life):
     dist = [0] * size
@@ -40,7 +41,7 @@ def sampleMultiple(parameters, minExp, maxExp, size,dist,life):
     dist = logHistogramAdd(minExp, maxExp, size, dist, val)
     return dist
 
-def sampleL(parameters,minExp,maxExp,size,timeLimit,life):
+def sampleL(parameters,minExp,maxExp,size,timeLimit,life,N):
     dist = [0] * size
     timeStart = time.time()
     while True:
@@ -51,6 +52,8 @@ def sampleL(parameters,minExp,maxExp,size,timeLimit,life):
         if(life[0]):
             val *= lifeDist(life[1],life[2],life[3],life[4],life[5],life[6])
         val = 1/val
+        if(N[0]):
+            val *= sampleByBisection(StandardizeDistribution(N[1][0],N[1][1]))
         dist = logHistogramAdd(minExp, maxExp, size, dist, val)
         if time.time() - timeStart > timeLimit:
                 break  
