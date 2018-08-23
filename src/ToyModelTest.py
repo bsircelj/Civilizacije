@@ -11,8 +11,7 @@ from ToyModel import getStandardTuple, getMaxPDF, getCDFNIC, getCDFPLOSCINA, nor
 size = 100000
 pdfSize = 10001
 
-
-tuple = getStandardTuple(size, pdfSize, lowerThan=0.75 ,stParametrov = 9)
+tuple = getStandardTuple(size, pdfSize, lowerThan=1 ,stParametrov = 9, low=0, high=0.2)
 
 pdf = tuple[3]
 '''
@@ -52,7 +51,8 @@ print(vsota/size)
 
 print("konec")
 
-plt.plot(x, cdfPLOSCINA , 'green')
+#plt.plot(x, cdfPLOSCINA , 'green')
+plt.title('low=0.0, high=0.2')
 plt.plot(x, pdf, 'blue')
 plt.plot(x, cdfNIC , 'red')
 plt.xscale('log')
