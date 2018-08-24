@@ -45,6 +45,46 @@ def getStandardTuple(size=100000, pdfSize=10001, low=0 , high=0.2, lowerThan=1, 
 
     return (arrayOfParameters, alonePossibility, x, pdf, cdfNIC, cdfPLOSCINA)
 
+def getStandardTupleLOGUNIFORM(size=100000, pdfSize=10001, low=0.001 , high=0.2, lowerThan=1, stParametrov=9, start=-15, stop=5, hundredBillions = 100000000000 ):  # WARNING: PDFSIZE MUST BE 101, 1001, OR 10001, ETC. 
+    pdf = [0] * pdfSize
+    arrayOfParameters = []
+    stevecManjsihOd1 = 0
+    x = np.logspace(start, stop , pdfSize)
+    
+    desetNaStDecimalk = ((pdfSize - 1) / (stop - start))  # =1000
+    polOdArraya = start * desetNaStDecimalk  # =5000
+    
+    logLow= np.log(low)
+    logHigh = np.log(high)
+    
+    for j in range(0, size):
+        
+        parameters = 1
+        for i in range(0, stParametrov):
+            r = random.uniform(logLow, logHigh)
+            parameters *= np.exp(r)
+            
+        parameters = parameters * (hundredBillions)  
+        stevecManjsihOd1 += (parameters < lowerThan)
+        arrayOfParameters.append(parameters)
+        
+        indeksPDF = int(round(np.log10(parameters) * desetNaStDecimalk - polOdArraya))
+        if indeksPDF < 0:
+            indeksPDF = 1
+        elif indeksPDF >= pdfSize:
+            indeksPDF = pdfSize - 1
+        pdf[indeksPDF] += 1
+    
+    alonePossibility = stevecManjsihOd1 / size
+
+    cdfNIC = getCDFNIC(pdf)
+    cdfPLOSCINA = getCDFPLOSCINA(x, pdf)
+    pdf = normalizePDF(pdf)
+    pdf = fl.gaussian_filter(pdf, 100)
+    pdf = normalizePDF(pdf)
+
+    return (arrayOfParameters, alonePossibility, x, pdf, cdfNIC, cdfPLOSCINA)
+
 
 def getIndexMaxPDF(pdf):
     length = len(pdf)
@@ -130,6 +170,26 @@ def getAlonePossibility(low=0, high=0.2, size=100000, lowerThan=1, stParametrov=
         for i in range(0, stParametrov):
             r = random.uniform(low, high)
             parameters *= r
+            
+        parameters = parameters * hundredBillions
+        stevecManjsihOd1 += (parameters < lowerThan)
+    
+    alonePossibility = stevecManjsihOd1 / size
+    return alonePossibility
+
+def getAlonePossibilityLOGUNIFORM(low=0.001, high=0.2, size=100000, lowerThan=1, stParametrov=9):
+    stevecManjsihOd1 = 0
+    hundredBillions = 100000000000  # =100 000 000 000
+    
+    logLow= np.log(low)
+    logHigh = np.log(high)
+    
+    for j in range(0, size):
+        
+        parameters = 1
+        for i in range(0, stParametrov):
+            r = random.uniform( logLow , logHigh )
+            parameters *= np.exp(r)
             
         parameters = parameters * hundredBillions
         stevecManjsihOd1 += (parameters < lowerThan)
