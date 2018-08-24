@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from createGraph import createGraph
 from StandardizeDistribution import StandardizeDistributionW
 
-(xaxis,yaxis) = readFile("sigma is 50 plus 1.csv")
+(xaxis,yaxis) = readFile("what is L.csv")
 
 yaxis = fl.gaussian_filter(yaxis, 10)
 
@@ -95,7 +95,7 @@ plt.title('Log Scale')
 '''
 plt.xscale("log")
 #plt.yscale("log")
-plt.ylim(0,200)
+#plt.ylim(0,200)
 
 plt.plot(xaxis, yaxis,'blue')
 

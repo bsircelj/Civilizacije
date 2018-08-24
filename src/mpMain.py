@@ -58,7 +58,7 @@ Length = (100, 10000000000)
 
 Flife = (1, -35, 15, 14, 17, 0, 50)
 N = readFile('sigma is 50.csv')
-(xaxis, yaxis) = sampleL([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization], -50, 70, size, 50000 , Flife, (1, N))
+(xaxis, yaxis) = sampleL([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization], -50, 70, size, 2700 , Flife, (1, N))
 save(xaxis, yaxis, 'What is L with N sig50')
 
 '''
