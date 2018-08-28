@@ -11,9 +11,9 @@ import matplotlib.pyplot as plt
 from createGraph import createGraph
 from StandardizeDistribution import StandardizeDistributionW
 
-(xaxis,yaxis) = readFile("What is L with N sig50.csv")
+(xaxis,yaxis) = readFile("Toy model 4 parameters2.csv")
 
-yaxis = fl.gaussian_filter(yaxis, 50)
+yaxis = fl.gaussian_filter(yaxis, 2)
 
 (mean,median) = meanMedian(xaxis,yaxis)
 
@@ -97,7 +97,7 @@ plt.title('Log Scale')
 #plt.yscale("log")
 #plt.ylim(0,200)
 '''
-plt.xscale("log")
+#plt.xscale("log")
 plt.plot(xaxis, yaxis,'blue')
 
 plt.show()
