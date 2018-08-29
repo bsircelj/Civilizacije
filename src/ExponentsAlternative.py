@@ -10,13 +10,9 @@ from meanMedian import meanMedian
 from IO import save, readFile
 import random
 from ToyModel import getCDFNIC, getMaxPDF, normalizePDF
+import math
 mp.dps=230
 
-#vnesi low and high pa sigmo in mu
-low = -105
-high = 15
-median = 0
-sigma = 2
 
 def getNEksponentSample():
     RStarSample = random.uniform( 0 , 2 )
@@ -26,12 +22,12 @@ def getNEksponentSample():
     fCivilization = random.uniform( -2 , 0 )
     L = random.uniform( 2 , 10 )
     
-    fLife = lifeDist(vMin=0,vMax=15,tMin=14,tMax=17,mean=0, sigma=100)
+    fLife = lifeDist(vMin=0,vMax=15,tMin=14,tMax=17,mean=0, sigma=300)
     fLifeEks = float( mp.log(fLife, 10) )
     resitev = RStarSample + fPlanets + nEnvironment + fLifeEks + fInteligence + fCivilization + L
     return resitev
 
-def getDistributionOfEks( size = 100000, pdfSize = 1201, low = -100, high = 15):
+def getDistributionOfEks( size = 100000, pdfSize = 2151, low = -100, high = 15):
     xOs = np.linspace(low, high, pdfSize )
     pdf= [0] * pdfSize
     zmnozek = ((pdfSize - 1) / (high - low))  # =1000
@@ -39,27 +35,39 @@ def getDistributionOfEks( size = 100000, pdfSize = 1201, low = -100, high = 15):
     for i in range(0, size):
         parameters = getNEksponentSample()
         
-        indeksPDF = int(round(parameters * zmnozek - pristevek ))
-        if indeksPDF < 0:
-            indeksPDF = 1
-        elif indeksPDF >= pdfSize:
-            indeksPDF = pdfSize - 1
-        pdf[indeksPDF] += 1
+        if (math.isinf(parameters)):
+            pdf[0] += 1
+            continue
+        zaokrozenIndeks = round(parameters * zmnozek - pristevek )
+        if (zaokrozenIndeks < 0):
+            pdf[ 0 ] += 1
+            continue
+        if zaokrozenIndeks >= pdfSize - 1:
+            pdf[ pdfSize - 1 ] += 1
+            continue
+        if (math.isinf(zaokrozenIndeks)):
+            pdf[0] += 1
+            continue
+        indeksPDF = int( zaokrozenIndeks )
+        pdf[ indeksPDF ] += 1
     
     return xOs, pdf
 
 #dejanski program:
-start = -100
+start = -200
 stop = 15
+pdfSize = 2151
+size = 100000
 
-xOs, pdf = getDistributionOfEks(low = start, high = stop)
+xOs, pdf = getDistributionOfEks(size, pdfSize, low = start, high = stop)
 cdf = getCDFNIC(pdf)
+pdf[0] = pdf[1]
 pdf=normalizePDF(pdf)
 pdf = fl.gaussian_filter( pdf , 10)
 #cdf = getCDFNIC(pdf)
 plt.plot(xOs, pdf, 'blue', label = 'pdf' )
 plt.plot(xOs, cdf, 'red', label = 'cdf' )
-plt.xlim(low, high)
+plt.xlim(start , stop)
 plt.show()
 
 
