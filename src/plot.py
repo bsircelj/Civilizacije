@@ -11,9 +11,9 @@ import matplotlib.pyplot as plt
 from createGraph import createGraph
 from StandardizeDistribution import StandardizeDistributionW
 
-(xaxis,yaxis) = readFile("Toy model 4 parameters2.csv")
+(xaxis,yaxis) = readFile("Toy model 3 parameters uniform2.csv")
 
-yaxis = fl.gaussian_filter(yaxis, 2)
+yaxis = fl.gaussian_filter(yaxis, 3)
 
 (mean,median) = meanMedian(xaxis,yaxis)
 
