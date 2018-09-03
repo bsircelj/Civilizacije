@@ -54,7 +54,7 @@ def getDistributionOfEks( size = 100000, pdfSize = 2151, low = -100, high = 15):
     return xOs, pdf
 
 #dejanski program:
-start = -200
+start = -100
 stop = 15
 pdfSize = 2151
 size = 100000
