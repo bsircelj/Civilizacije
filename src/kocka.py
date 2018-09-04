@@ -32,10 +32,10 @@ distE1 = [0] * size
 distE2 = [0] * size
 distE3 = [0] * size
 low = 0
-high = 1 / 3
+high = 0.2
 no = 9
 times = 10000
-goal = (1 / 6) ** no   
+goal = (0.1) ** no *10**11   
 epsMax = (1 / 6) ** 3
 epsX = [0] * size
 
@@ -43,14 +43,15 @@ hBil = 100000
 
 goalGraphY = [goal] * size
 goalGraphX = range(0, size)
-eps = (1/6)**2
+eps = 0.05
 
-(arrayOfParameters, alonePossibility, x, pdf, cdfNIC, cdfPLOSCINA) = getStandardTuple(size, 10001, low, high, 1, no, -15, 0,1)
-pdf = fl.gaussian_filter(pdf, 10)
+(arrayOfParameters, alonePossibility, x, pdf, cdfNIC, cdfPLOSCINA) = getStandardTuple(size, 10001, low+eps, high-eps, 1, no, -5, 5,10**11)
+#pdf = fl.gaussian_filter(pdf, 10)
+
 plt.plot(x,pdf)
 plt.plot([goal,goal],[1,0],'r-')
 #plt.xscale('log')
-plt.xlim(0,10**-6)
+plt.xlim(0,200)
 plt.show()
 
 '''

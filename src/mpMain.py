@@ -55,25 +55,25 @@ Nhabitable = (0.1, 1)
 Fintelligence = (0.001, 1)
 Fcivilization = (0.01, 1)
 Length = (100, 10000000000)
-
+'''
 Flife = (1, -35, 15, 14, 17, 0, 50)
 N = readFile('sigma is 50.csv')
 (xaxis, yaxis) = sampleL([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization], -100, 100, size, 230000, Flife, (1, N))
 save(xaxis, yaxis, 'What is L with N sig50')
 
-'''
+
 Flife = (1,-35,15,14,17,0,100)
 
 (xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-120,15, size, 50000,Flife)
 save(xaxis, yaxis, 'sigma is 100')
+'''
 
 
+Flife = (1,-35,15,14,17,0,70)
 
-Flife = (1,-35,15,14,17,0,14)
-
-(xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-40,10, size, 100000,Flife)
-save(xaxis, yaxis,'sigma is 14')
-
+(xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-20,20, size, 50000,Flife)
+save(xaxis, yaxis,'sigma is 70 laplace')
+'''
 Flife = (1,-35,15,14,17,0,10**50)
 
 (xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-100,15, size, 1000,Flife)

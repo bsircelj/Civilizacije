@@ -11,73 +11,85 @@ import matplotlib.pyplot as plt
 from createGraph import createGraph
 from StandardizeDistribution import StandardizeDistributionW
 
-(xaxis,yaxis) = readFile("Toy model 3 parameters uniform2.csv")
+(xaxis,yaxis) = readFile("sigma is 70 laplace.csv")
 
-yaxis = fl.gaussian_filter(yaxis, 3)
+
+
+avg=0
+for i in range(0,len(xaxis)):
+    avg+=yaxis[i]*xaxis[i]
+avg/=sum(yaxis)
+print(sum(yaxis))
+#avg=avg-24821395
+
+    
+yaxis = fl.gaussian_filter(yaxis, 20)
 
 (mean,median) = meanMedian(xaxis,yaxis)
 
 print("\nMean: ", mean, "\nMedian: ", median)
+print("Average: ",avg)
 
 #createGraph(xaxis,yaxis,start,end,size)
-
+(length, xaxis, yaxis, cdf,cdfW )= StandardizeDistributionW(xaxis,yaxis)
 
 
 
 plt.figure(1)
+multiplier = -2
 
 plt.subplot(4,2,1)
-fromN = 0.00001
-toN = 0.0001
+fromN = 10**(0+multiplier)
+toN = 10**(2+multiplier)
 plt.title(str(fromN)+' - '+str(toN))
 (x,y) = createGraph(xaxis,yaxis,fromN,toN,1000)
 plt.plot(x,y)
 
 plt.subplot(4,2,2)
-fromN = 0.0001
-toN = 0.001
+fromN = 10**(2+multiplier)
+toN = 10**(4+multiplier)
 plt.title(str(fromN)+' - '+str(toN))
 (x,y) = createGraph(xaxis,yaxis,fromN,toN,1000)
 plt.plot(x,y)
 
 plt.subplot(4,2,3)
-fromN = 0.001
-toN = 0.01
+fromN = 10**(4+multiplier)
+toN = 10**(6+multiplier)
 plt.title(str(fromN)+' - '+str(toN))
 (x,y) = createGraph(xaxis,yaxis,fromN,toN,1000)
 plt.plot(x,y)
 
 plt.subplot(4,2,4)
-fromN = 0.01
-toN = 0.1
+fromN = 10**(6+multiplier)
+toN = 10**(8+multiplier)
 plt.title(str(fromN)+' - '+str(toN))
 (x,y) = createGraph(xaxis,yaxis,fromN,toN,1000)
 plt.plot(x,y)
 
 plt.subplot(4,2,5)
-fromN = 0.1
-toN = 1
+fromN = 10**(8+multiplier)
+toN = 10**(10+multiplier)
 plt.title(str(fromN)+' - '+str(toN))
 (x,y) = createGraph(xaxis,yaxis,fromN,toN,1000)
 plt.plot(x,y)
 
 plt.subplot(4,2,6)
-fromN = 1
-toN = 10
+fromN = 10**(10+multiplier)
+toN = 10**(12+multiplier)
 plt.title(str(fromN)+' - '+str(toN))
 (x,y) = createGraph(xaxis,yaxis,fromN,toN,1000)
 plt.plot(x,y)
 
 plt.subplot(4,2,7)
-fromN = 10
-toN = 1000
+fromN = 10**(12+multiplier)
+toN = 10**(14+multiplier)
 plt.title(str(fromN)+' - '+str(toN))
 (x,y) = createGraph(xaxis,yaxis,fromN,toN,1000)
 plt.plot(x,y)
 
 plt.subplot(4,2,8)
-fromN = 1000
-toN = 100000
+fromN = 10**(14+multiplier)
+toN = 10**(16+multiplier)
 plt.title(str(fromN)+' - '+str(toN))
 (x,y) = createGraph(xaxis,yaxis,fromN,toN,1000)
 plt.plot(x,y)
@@ -87,18 +99,19 @@ plt.tight_layout()
 plt.figure(2)
 
 #yaxis = fl.gaussian_filter(yaxis, 15)
-'''
-(length, xaxis, yaxis, cdf,cdfW )= StandardizeDistributionW(xaxis,yaxis)
-plt.plot(xaxis,cdf,'red')
+
+
+#plt.plot(xaxis,cdf,'red', label = 'CDF')
 #plt.plot(xaxis,cdfW,'green')
-plt.title('Log Scale')
+plt.title('5 parameters')
 
 
 #plt.yscale("log")
-#plt.ylim(0,200)
-'''
-#plt.xscale("log")
-plt.plot(xaxis, yaxis,'blue')
+#plt.ylim(0,0.0200)
+
+plt.xscale("log")
+plt.plot(xaxis, yaxis,'green',label='PDF')
+plt.legend(loc=4)
 
 plt.show()
 

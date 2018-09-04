@@ -33,11 +33,24 @@ def mpSampleMultipleTime(parameters, minExp, maxExp, size, timeLimit,life):
 
 def sampleMultiple(parameters, minExp, maxExp, size,dist,life):
     val = mpf('1.0')
-    for p in parameters:
+    
+    val *= sample(parameters[0])
+    val *= sample(parameters[-1])
+    
+    minValue = 1/(val+2)
+    
+    for p in parameters[1:-1]:
         newVal = sample(p)
-        val *= newVal
+        if newVal<minValue:
+            val *= minValue
+        else:
+            val *= newVal
     if(life[0]):
-        val *= lifeDist(life[1],life[2],life[3],life[4],life[5],life[6])
+        newVal = lifeDist(life[1],life[2],life[3],life[4],life[5],life[6])
+        if newVal<minValue:
+            val *= minValue
+        else:
+            val *= newVal
     dist = logHistogramAdd(minExp, maxExp, size, dist, val)
     return dist
 

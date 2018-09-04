@@ -14,7 +14,7 @@ from IO import save, readFile
 timeStart = time.time()
 times = 100
 
-noParameters = 3
+noParameters = 5
 
 noStars = 10 ** (noParameters + 2)
 
@@ -28,12 +28,20 @@ for t in range(0, times + 1):
             print("[", "|"*int(t / times * 10), " "*int(10 - t / times * 10), "]", izpis, "% time: ", time.time() - timeStart)
             print()
             izpis += 10
-         
+            '''
+    allRand = 1
+    for i in range(0, noParameters):
+            # allRand *= random.uniform(0, 0.2)
+            allRand *= random.random() * 0.2
+            '''
     for s in range(0, noStars):
+        
         allRand = 1
+        
         for i in range(0, noParameters):
             #allRand *= random.uniform(0, 0.2)
             allRand *= random.random()*0.2
+        
         if(random.random() < allRand):
             summ += 1
     elements[t] = summ
@@ -46,7 +54,7 @@ for t in range(0, times + 1):
 
 (xaxis, yaxis) = createHistogram(elements, range(0, 200))
 
-save(xaxis, yaxis, 'Toy model 3 parameters uniform2')
+save(xaxis, yaxis, 'Toy model 5 parameters uniform bad')
 
 # yaxis = fl.gaussian_filter(yaxis, 10)
 

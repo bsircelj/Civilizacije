@@ -14,7 +14,7 @@ from IO import save,readFile
 timeStart = time.time()
 times = 100
 
-noParameters = 7
+noParameters = 4
 
 noStars = 10**(noParameters+2)
 
@@ -48,7 +48,7 @@ for t in range(0,times+1):
 
 (xaxis,yaxis) = createHistogram(elements,range(0,200))
 
-save(xaxis,yaxis,'Toy model 6 parameters')
+save(xaxis,yaxis,'Toy model 4 parameters brez')
 
 #yaxis = fl.gaussian_filter(yaxis, 10)
 
