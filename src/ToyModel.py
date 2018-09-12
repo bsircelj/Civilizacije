@@ -199,7 +199,7 @@ def fromEpsilonGetLowHigh(epsilon=0, option=1, low=0.0, high=0.2):
 
 def getAlonePossibility(low=0, high=0.2, size=100000, lowerThan=1, stParametrov=9):
     stevecManjsihOd1 = 0
-    hundredBillions = 100000000000  # =100 000 000 000
+    hundredBillions = int(10**(2 + stParametrov))
     
     for j in range(0, size):
         
@@ -214,9 +214,9 @@ def getAlonePossibility(low=0, high=0.2, size=100000, lowerThan=1, stParametrov=
     alonePossibility = stevecManjsihOd1 / size
     return alonePossibility
 
-def getAlonePossibilityLOGUNIFORM(low=0.001, high=0.2, size=100000, lowerThan=1, stParametrov=9):
+def getAlonePossibilityLOGUNIFORM(low=0.001, high=0.2, size=10000, lowerThan=1, stParametrov=9):
     stevecManjsihOd1 = 0
-    hundredBillions = 100000000000  # =100 000 000 000
+    hundredBillions = int(10**(2 + stParametrov))
     
     logLow= np.log(low)
     logHigh = np.log(high)

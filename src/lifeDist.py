@@ -30,3 +30,20 @@ def lifeDist(vMin=-35,vMax=15,tMin=14,tMax=17,mean=0, sigma=14):
 def sample(dist):
     r = random.uniform(mp.log(dist[0]), mp.log(dist[1]))
     return mp.exp(r)
+
+
+def lifeDist2(vMin=-35,vMax=15,tMin=14,tMax=17,lambMin = -188 , lambMax = 15 ):
+    V = (mpmathify(10 ** (vMin)), mpmathify(10 ** (vMax)))
+    t = (mpmathify(10 ** (tMin)), mpmathify(10 ** (tMax)))
+    lamb = (mpmathify(10 ** ( lambMin )), mpmathify(10 ** lambMax))
+    mp.dps = 230
+    
+    val = mpf('1')
+    val *= sample( lamb )
+    val *= sample(V)
+    val *= sample(t)
+    val = 0-val
+    expo = mp.exp(val)        
+    val = mpf('1') - expo
+    mp.dps = 15
+    return val

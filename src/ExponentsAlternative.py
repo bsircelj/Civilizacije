@@ -2,7 +2,7 @@ from mpSampleMultiple import mpSampleMultiple, mpSampleMultipleTime, sampleL
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.ndimage.filters as fl
-from lifeDist import lifeDist
+from lifeDist import lifeDist, lifeDist2
 from mpmath import mpmathify
 import mpmath as mp
 import time
@@ -11,6 +11,8 @@ from IO import save, readFile
 import random
 from ToyModel import getCDFNIC, getMaxPDF, normalizePDF
 import math
+import pylab as p
+from mpLogspace import mpLogspace
 mp.dps=230
 
 
@@ -22,12 +24,12 @@ def getNEksponentSample():
     fCivilization = random.uniform( -2 , 0 )
     L = random.uniform( 2 , 10 )
     
-    fLife = lifeDist(vMin=0,vMax=15,tMin=14,tMax=17,mean=0, sigma=300)
+    fLife = lifeDist(vMin=0,vMax=15,tMin=14,tMax=17,mean=0, sigma=200)
     fLifeEks = float( mp.log(fLife, 10) )
     resitev = RStarSample + fPlanets + nEnvironment + fLifeEks + fInteligence + fCivilization + L
     return resitev
 
-def getDistributionOfEks( size = 100000, pdfSize = 2151, low = -100, high = 15):
+def getDistributionOfEks( size = 1000, pdfSize = 2151, low = -15, high = 15):
     xOs = np.linspace(low, high, pdfSize )
     pdf= [0] * pdfSize
     zmnozek = ((pdfSize - 1) / (high - low))  # =1000
@@ -54,21 +56,33 @@ def getDistributionOfEks( size = 100000, pdfSize = 2151, low = -100, high = 15):
     return xOs, pdf
 
 #dejanski program:
-start = -100
+start = -40
 stop = 15
 pdfSize = 2151
-size = 100000
+size = 10000
 
 xOs, pdf = getDistributionOfEks(size, pdfSize, low = start, high = stop)
 cdf = getCDFNIC(pdf)
 pdf[0] = pdf[1]
 pdf=normalizePDF(pdf)
-pdf = fl.gaussian_filter( pdf , 10)
+pdf = fl.gaussian_filter( pdf , 1)
 #cdf = getCDFNIC(pdf)
+
+
+l = mp.linspace( start, stop, pdfSize )
+xOs = [mp.power(10, x) for x in l]
+
+save(xOs, pdf , "pdf-sigma 200")
+save(xOs, cdf , "cdf-sigma 200")
+
+plt.xscale('log')
 plt.plot(xOs, pdf, 'blue', label = 'pdf' )
 plt.plot(xOs, cdf, 'red', label = 'cdf' )
-plt.xlim(start , stop)
+p.fill(xOs, pdf, facecolor='blue', alpha=0.5)
+plt.xlim(10**start , 10**stop)
 plt.show()
+
+
 
 
 

@@ -12,19 +12,24 @@ from ToyModel import getAlonePossibility, getAlonePossibilityLOGUNIFORM
 
 lowEpsilon = 0.0
 highEpsilon = 0.04
-sizeOfEpsilonRange = 20
+sizeOfEpsilonRange = 100
+
+lowEpsilonLOG = -8
+highEpsilonLOG = np.log10(0.19)
 
 xEpsilon = np.linspace(lowEpsilon, highEpsilon, sizeOfEpsilonRange)
+xEpsilonLOG = np.logspace( lowEpsilonLOG , highEpsilonLOG , sizeOfEpsilonRange )
 
 pdf1 = []
-for epsilon in xEpsilon:
-    value = getAlonePossibility(low=0.001+epsilon, high = 0.2 - epsilon, lowerThan=1)
+for epsilon in xEpsilonLOG:
+    value = getAlonePossibilityLOGUNIFORM( epsilon, high = 0.2 - epsilon, lowerThan=1)
     pdf1.append(value)
-
+'''
 pdf2 = []
-for epsilon in xEpsilon:
-    value = getAlonePossibilityLOGUNIFORM(low=0.001+epsilon, high = 0.2 - epsilon, lowerThan=1)
+for epsilon in xEpsilonLOG:
+    value = getAlonePossibilityLOGUNIFORM(low=0.001 + epsilon, high = 0.2 - epsilon, lowerThan=1)
     pdf2.append(value)
+'''
 '''
 pdf3 = []
 for epsilon in xEpsilon:
@@ -32,13 +37,14 @@ for epsilon in xEpsilon:
     pdf3.append(value)
 '''
 
-plt.plot(xEpsilon, pdf1, label = 'uniform')
-plt.plot(xEpsilon, pdf2, label = 'log-uniform')
+plt.plot(xEpsilonLOG, pdf1, label = 'range( e , 0.2-e )')
+#plt.plot(xEpsilonLOG, pdf2, label = 'range(0.001+e , 0.2-e )')
 #plt.plot(xEpsilon, pdf3, label = 'cutoff = 0.5')
-plt.title('range(0.001 + epsilon, 0.2 ) , cutoff is 1')
+plt.title('logUniform , cutoff is 1')
 plt.ylabel('probability of being alone')
 plt.xlabel('epsilon')
-plt.legend( loc=1)
+plt.legend( loc=3)
+plt.xscale('log')
 plt.xlim(lowEpsilon, highEpsilon)
 plt.show()
 
