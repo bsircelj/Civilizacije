@@ -3,12 +3,19 @@ import mpmath as mp
 import random
 import math
 from lifeDist import lifeDist, lifeDist2
+import matplotlib.pyplot as plt
+import scipy.ndimage.filters as fl
+from IO import save
+from ToyModel import getCDFNIC, normalizePDF
+import mpmath as mp
+import pylab as p
+from ExponentsAlternative import getDistributionOfEks
 
 mp.dps = 230
 
 
-def getNEksponentSample():
-    RStarSample = random.uniform(0 , 2)
+def calculatePoint():
+    RStar = random.uniform(0 , 2)
     fPlanets = random.uniform(-1 , 0)
     nEnvironment = random.uniform(-1 , 0)
     fInteligence = random.uniform(-3 , 0)
@@ -27,9 +34,8 @@ def getNEksponentSample():
             break
     # modification    
     '''
-    resitev = RStarSample + fPlanets + nEnvironment + fLifeEks + fInteligence + fCivilization + L
-    #return (_, resitev)
-    return resitev
+    resitev = RStar + fPlanets + nEnvironment + fLifeEks + fInteligence + fCivilization + L
+    return fLifeEks
 
 
 def getDistributionOfEks(size=1000, pdfSize=2151, low=-15, high=15):
@@ -39,8 +45,7 @@ def getDistributionOfEks(size=1000, pdfSize=2151, low=-15, high=15):
     pristevek = low * zmnozek  # =5000
     izpis = 0
     for i in range(0, size):
-        #(skip, parameters) = getNEksponentSample()
-        parameters = getNEksponentSample()
+        parameters = calculatePoint()
         
         if i % (size / 10) == 0:
             print(izpis, "%")
@@ -66,4 +71,33 @@ def getDistributionOfEks(size=1000, pdfSize=2151, low=-15, high=15):
         pdf[ indeksPDF ] += 1
     
     return xOs, pdf
+
+start = -150
+stop = 15
+pdfSize = 2151
+size = 10000
+
+xOs, pdf = getDistributionOfEks(size, pdfSize, low = start, high = stop)
+#pdf = fl.gaussian_filter( pdf , 20)
+cdf = getCDFNIC(pdf)
+pdf[0] = pdf[1]
+pdf=normalizePDF(pdf)
+l = mp.linspace( start, stop, pdfSize )
+xOs = [mp.power(10, x) for x in l]
+
+save(xOs, pdf , "pdf")
+save(xOs, cdf , "cdf")
+
+
+
+#cdf = getCDFNIC(pdf)
+
+
+#plt.xscale('log')
+plt.plot(xOs, pdf, 'blue', label = 'pdf' )
+plt.plot(xOs, cdf, 'red', label = 'cdf' )
+p.fill(xOs, pdf, facecolor='blue', alpha=0.5)
+#plt.xlim(10**start , 10**stop)
+plt.xlim(0 , 2)
+plt.show()
 

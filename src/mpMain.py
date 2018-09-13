@@ -14,7 +14,7 @@ import time
 from meanMedian import meanMedian
 from IO import save, readFile
 
-size = 10000;
+size = 2151;
 # size=500;
 
 timeStart = time.time()
@@ -69,10 +69,10 @@ save(xaxis, yaxis, 'sigma is 100')
 '''
 
 
-Flife = (1,-35,15,14,17,0,70)
+Flife = (1,-35,15,14,17,0,200)
 
-(xaxis, yaxis) = mpSampleMultipleTime([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-20,20, size, 50000,Flife)
-save(xaxis, yaxis,'sigma is 70 laplace')
+(xaxis, yaxis) = mpSampleMultiple([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-150,20, size, 10000,Flife)
+save(xaxis, yaxis,'sigma is 200 uniform2')
 '''
 Flife = (1,-35,15,14,17,0,10**50)
 

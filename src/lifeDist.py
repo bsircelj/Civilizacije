@@ -18,9 +18,10 @@ def lifeDist(vMin=-35,vMax=15,tMin=14,tMax=17,mean=0, sigma=14):
     
     val = mpf('1')
     r = np.random.lognormal(mean,sigma)
+    #r = np.random.normal(mean,sigma)
     val *= r
-    val *= sample(V)
-    val *= sample(t)
+    val *= sampleU(V)
+    val *= sampleU(t)
     val = 0-val
     expo = mp.exp(val)        
     val = mpf('1') - expo
@@ -30,6 +31,9 @@ def lifeDist(vMin=-35,vMax=15,tMin=14,tMax=17,mean=0, sigma=14):
 def sample(dist):
     r = random.uniform(mp.log(dist[0]), mp.log(dist[1]))
     return mp.exp(r)
+
+def sampleU(dist):
+    return random.uniform(dist[0], dist[1])
 
 
 def lifeDist2(vMin=-35,vMax=15,tMin=14,tMax=17,lambMin = -188 , lambMax = 15 ):

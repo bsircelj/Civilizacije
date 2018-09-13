@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from createGraph import createGraph
 from StandardizeDistribution import StandardizeDistributionW
 
-(xaxis,yaxis) = readFile("sigma is 70 laplace.csv")
+(xaxis,yaxis) = readFile("sigma is 200 uniform.csv")
 
 
 
@@ -101,16 +101,16 @@ plt.figure(2)
 #yaxis = fl.gaussian_filter(yaxis, 15)
 
 
-#plt.plot(xaxis,cdf,'red', label = 'CDF')
+plt.plot(xaxis,cdf,'red', label = 'CDF')
 #plt.plot(xaxis,cdfW,'green')
-plt.title('5 parameters')
+#plt.title('5 parameters')
 
 
 #plt.yscale("log")
 #plt.ylim(0,0.0200)
 
 plt.xscale("log")
-plt.plot(xaxis, yaxis,'green',label='PDF')
+plt.plot(xaxis, yaxis,'blue',label='PDF')
 plt.legend(loc=4)
 
 plt.show()
