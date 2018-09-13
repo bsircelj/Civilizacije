@@ -18,8 +18,8 @@ pdf=normalizePDF(pdf)
 l = mp.linspace( start, stop, pdfSize )
 xOs = [mp.power(10, x) for x in l]
 
-save(xOs, pdf , "pdf skipped 200")
-save(xOs, cdf , "cdf skipped 200")
+save(xOs, pdf , "pdf 200")
+save(xOs, cdf , "cdf 200")
 
 
 pdf = fl.gaussian_filter( pdf , 20)

@@ -71,7 +71,7 @@ save(xaxis, yaxis, 'sigma is 100')
 
 Flife = (1,-35,15,14,17,0,200)
 
-(xaxis, yaxis) = mpSampleMultiple([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-150,20, size, 10000,Flife)
+(xaxis, yaxis) = mpSampleMultiple([Rstar, Fplanets, Nhabitable, Fintelligence, Fcivilization, Length],-40,15, size, 10000,Flife)
 save(xaxis, yaxis,'sigma is 200 uniform2')
 '''
 Flife = (1,-35,15,14,17,0,10**50)
