@@ -68,6 +68,8 @@ print(X,"\n")
 print(Y,"\n")
 print(Z)   
      
+     
+print("x:",np.shape(X)," y:",np.shape(Y)," z:",np.shape(Z))
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 

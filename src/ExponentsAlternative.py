@@ -32,7 +32,7 @@ def getNEksponentSample():
     return resitev
 
 
-def getDistributionOfEks(size=1000, pdfSize=2151, low=-15, high=15):
+def getDistributionOfEks(size=1000, pdfSize=2151, low=-15, high=15,printOn=0):
     xOs = np.linspace(low, high, pdfSize)
     pdf = [0] * pdfSize
     zmnozek = ((pdfSize - 1) / (high - low))  # =1000
@@ -41,10 +41,10 @@ def getDistributionOfEks(size=1000, pdfSize=2151, low=-15, high=15):
     for i in range(0, size):
         #(skip, parameters) = getNEksponentSample()
         parameters = getNEksponentSample()
-        
-        if i % (size / 10) == 0:
-            print(izpis, "%")
-            izpis += 10
+        if(printOn):
+            if i % (size / 10) == 0:
+                print(izpis, "%")
+                izpis += 10
         '''
         if skip:
             continue
@@ -77,9 +77,6 @@ def getDistributionOfEksKnownFL(size=1000, pdfSize=2151, low=-15, high=15, flEks
         #(skip, parameters) = getNEksponentSample()
         parameters = getNEksponentSampleKnownFl(flEks)
         
-        if i % (size / 10) == 0:
-            print(izpis, "%")
-            izpis += 10
         '''
         if skip:
             continue
