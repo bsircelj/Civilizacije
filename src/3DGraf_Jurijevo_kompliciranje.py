@@ -3,29 +3,40 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
 import numpy as np
-from ExponentsAlternative import getDistributionOfEksKnownFL, getNEksponentSampleKnownFl
+from ExponentsAlternative import getDistributionOfEks, getDistributionOfEksKnownFL, getNEksponentSampleKnownFl
 
 #input:
 startFLife = -100
 stopFLife = 0
 sizeFlife = 100
 
-startXOs = -84
+startXOs = -35
 stopXOs = 15
-sizeXOs = 100
+sizeXOs = 50
 
+startFInteligence = -3
+stopFInteligence = 0
+sizeFInteligence = 50
+
+startFCivilization = -2
+stopFCivilization = 0
+sizeFCivilization = 50
 
 
 
 #fLife = np.linspace( startFLife, stopFLife , sizeFlife )
-fLife = np.linspace(  stopFLife, startFLife, sizeFlife )
+fLife = np.linspace(  startFLife, stopFLife, sizeFlife )
+fCivilization = np.linspace(  startFCivilization, stopFCivilization, sizeFCivilization )
+fInteligence = np.linspace(  startFInteligence , stopFInteligence , sizeFInteligence )
 #fLife = np.flip(fLife)
 xOs = np.linspace( startXOs , stopXOs , sizeXOs )
 
 pdfARRAY = []
 
-for value in fLife:
-    pdf = getDistributionOfEksKnownFL(size=10000, pdfSize=sizeXOs, low=startXOs, high=stopXOs, flEks = value)[1]
+for value in fInteligence:
+    print(value)
+    #pdf = getDistributionOfEksKnownFL(size=10000, pdfSize=sizeXOs, low=startXOs, high=stopXOs, flEks = value)[1]
+    pdf = getDistributionOfEks(size=10000, pdfSize=sizeXOs, low=startXOs, high=stopXOs, knownFI = value)[1]
     pdfARRAY.append(pdf)
 
 #print(pdfARRAY)
@@ -36,7 +47,7 @@ ax = fig.gca(projection='3d')
 #X = [ 1,2,3,4]
 #Y = [-4,-3,-2,-1, 1, -5]
 #X, Y = np.meshgrid(X, Y)
-xOs, fLife = np.meshgrid( xOs, fLife)
+xOs, fInteligence = np.meshgrid( xOs, fLife)
 #Z = xOs
 
 #Z2 = X+Y
@@ -47,7 +58,7 @@ Z = xOs
 #    Z[i] = pdfARRAY[i]
     
 X = xOs
-Y = fLife
+Y = fInteligence
 #Z = pdfARRAY
 Z= np.array(pdfARRAY)
 print(X,"\n")
@@ -59,7 +70,7 @@ print(Z)
 
 print("x:",np.shape(xOs)," y:",np.shape(fLife)," z:",np.shape(Z))
 # Plot the surface.
-surf = ax.plot_surface( xOs, fLife, Z, cmap=cm.coolwarm, linewidth=0, antialiased=False)
+surf = ax.plot_surface( xOs, fInteligence, Z, cmap=cm.coolwarm, linewidth=0, antialiased=False)
 
 # Customize the z axis.
 #ax.set_zlim(-1.01, 1.01)
@@ -76,7 +87,7 @@ fig.colorbar(surf, shrink=0.5, aspect=5)
 #plt.xscale("log")
 
 ax.set_xlabel("log(N)")
-ax.set_ylabel("log(Fl)")
+ax.set_ylabel("log(FI)")
 plt.gca().invert_yaxis()
 
 

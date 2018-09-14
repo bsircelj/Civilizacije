@@ -7,7 +7,7 @@ from lifeDist import lifeDist, lifeDist2
 mp.dps = 230
 
 
-def getNEksponentSample():
+def getNEksponentSample( knownFI= 100 , knownFC= 100 ):
     RStarSample = random.uniform(0 , 2)
     fPlanets = random.uniform(-1 , 0)
     nEnvironment = random.uniform(-1 , 0)
@@ -17,6 +17,14 @@ def getNEksponentSample():
     
     fLife = lifeDist(vMin=0, vMax=15, tMin=14, tMax=17, mean=0, sigma=200)
     fLifeEks = float(mp.log(fLife, 10))
+    
+    if ( knownFI != 100):
+        return RStarSample + fPlanets + nEnvironment + fLifeEks + knownFI + fCivilization + L
+    elif ( knownFC != 100):
+        return RStarSample + fPlanets + nEnvironment + fLifeEks + fInteligence + knownFC + L
+    else:
+        resitev = RStarSample + fPlanets + nEnvironment + fLifeEks + fInteligence + fCivilization + L
+        return resitev
     '''
     # modification
     skip = 0
@@ -27,12 +35,9 @@ def getNEksponentSample():
             break
     # modification    
     '''
-    resitev = RStarSample + fPlanets + nEnvironment + fLifeEks + fInteligence + fCivilization + L
-    #return (_, resitev)
-    return resitev
 
 
-def getDistributionOfEks(size=1000, pdfSize=2151, low=-15, high=15,printOn=0):
+def getDistributionOfEks(size=1000, pdfSize=2151, low=-15, high=15,printOn=0, knownFI = 100, knownFC = 100):
     xOs = np.linspace(low, high, pdfSize)
     pdf = [0] * pdfSize
     zmnozek = ((pdfSize - 1) / (high - low))  # =1000
@@ -40,7 +45,7 @@ def getDistributionOfEks(size=1000, pdfSize=2151, low=-15, high=15,printOn=0):
     izpis = 0
     for i in range(0, size):
         #(skip, parameters) = getNEksponentSample()
-        parameters = getNEksponentSample()
+        parameters = getNEksponentSample( knownFI , knownFC )
         if(printOn):
             if i % (size / 10) == 0:
                 print(izpis, "%")
