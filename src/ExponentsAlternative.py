@@ -59,13 +59,13 @@ def getDistributionOfEks(size=1000, pdfSize=2151, low=-15, high=15,printOn=0, kn
             continue
         zaokrozenIndeks = round(parameters * zmnozek - pristevek)
         if (zaokrozenIndeks < 0):
-            pdf[ 0 ] += 1
+            #pdf[ 0 ] += 1
             continue
         if zaokrozenIndeks >= pdfSize - 1:
             pdf[ pdfSize - 1 ] += 1
             continue
         if (math.isinf(zaokrozenIndeks)):
-            pdf[0] += 1
+            #pdf[0] += 1
             continue
         indeksPDF = int(zaokrozenIndeks)
         pdf[ indeksPDF ] += 1
