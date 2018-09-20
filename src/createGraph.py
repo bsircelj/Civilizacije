@@ -5,7 +5,7 @@ Created on 13 Aug 2018
 '''
 import numpy as np
 
-def createGraph(xaxis,yaxis,start,end,size):
+def createGraph1(xaxis,yaxis,start,end,size):
     
     graph = [0]*size
     newLocations = np.linspace(start,end,size)
@@ -24,6 +24,25 @@ def createGraph(xaxis,yaxis,start,end,size):
             if index >= len(newLocations)-1:
                 return (newLocations[0:-1],graph[0:-1])
     return (newLocations[0:-1],graph[0:-1])
+
+def createGraph(xaxis,yaxis,start,end,size):
+    
+    graph = [0]*size
+    newLocations = np.linspace(start,end,size)
+    index = 0
+    
+    for i in range(1,len(xaxis)-1):
+        temp1 = xaxis[i]
+        temp2 = newLocations[index]
+        temp3 = newLocations[index+1]
+        if(xaxis[i]<=newLocations[index+1] and xaxis[i]>newLocations[index]):
+            graph[index]+=yaxis[i]
+        else:
+            index+=1
+            if index+1==size:
+                break            
+            graph[index]+=yaxis[i]
+    return (newLocations,graph)
             
             
             

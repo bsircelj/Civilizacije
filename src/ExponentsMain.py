@@ -9,9 +9,9 @@ from ExponentsAlternative import getDistributionOfEks
 start = -40
 stop = 15
 pdfSize = 2151
-size = 100000
+size = 10000
 
-xOs, pdf = getDistributionOfEks(size, pdfSize, low = start, high = stop)
+xOs, pdf = getDistributionOfEks(size, pdfSize, low = start, high = stop, printOn=1)
 cdf = getCDFNIC(pdf)
 pdf[0] = pdf[1]
 pdf=normalizePDF(pdf)
@@ -22,13 +22,14 @@ save(xOs, pdf , "pdf 200")
 save(xOs, cdf , "cdf 200")
 
 
-pdf = fl.gaussian_filter( pdf , 20)
+#pdf = fl.gaussian_filter( pdf , 20)
 #cdf = getCDFNIC(pdf)
 
 
 plt.xscale('log')
 plt.plot(xOs, pdf, 'blue', label = 'pdf' )
 plt.plot(xOs, cdf, 'red', label = 'cdf' )
+plt.plot([1,1],[0,1],'green')
 p.fill(xOs, pdf, facecolor='blue', alpha=0.5)
 plt.xlim(10**start , 10**stop)
 plt.show()

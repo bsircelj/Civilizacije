@@ -19,13 +19,13 @@ def getNEksponentSample( knownFI= 100 , knownFC= 100 ):
     fLifeEks = float(mp.log(fLife, 10))
     
     if ( knownFI != 100):
-        return RStarSample + fPlanets + nEnvironment + fLifeEks + knownFI + fCivilization + L
+        resitev= RStarSample + fPlanets + nEnvironment + fLifeEks + knownFI + fCivilization + L
     elif ( knownFC != 100):
-        return RStarSample + fPlanets + nEnvironment + fLifeEks + fInteligence + knownFC + L
+        resitev= RStarSample + fPlanets + nEnvironment + fLifeEks + fInteligence + knownFC + L
     else:
         resitev = RStarSample + fPlanets + nEnvironment + fLifeEks + fInteligence + fCivilization + L
-        return resitev
-    '''
+       
+    
     # modification
     skip = 0
     mini = -RStarSample - L
@@ -33,8 +33,11 @@ def getNEksponentSample( knownFI= 100 , knownFC= 100 ):
         if it < mini:
             skip = 1
             break
-    # modification    
-    '''
+        mini-=it
+    # modification
+    
+    return (skip,resitev)
+    
 
 
 def getDistributionOfEks(size=1000, pdfSize=2151, low=-15, high=15,printOn=0, knownFI = 100, knownFC = 100):
@@ -44,16 +47,16 @@ def getDistributionOfEks(size=1000, pdfSize=2151, low=-15, high=15,printOn=0, kn
     pristevek = low * zmnozek  # =5000
     izpis = 0
     for i in range(0, size):
-        #(skip, parameters) = getNEksponentSample()
-        parameters = getNEksponentSample( knownFI , knownFC )
+        (skip, parameters) = getNEksponentSample()
+        #parameters = getNEksponentSample( knownFI , knownFC )
         if(printOn):
             if i % (size / 10) == 0:
                 print(izpis, "%")
                 izpis += 10
-        '''
+        
         if skip:
             continue
-        '''        
+             
         if (math.isinf(parameters)):
             pdf[0] += 1
             continue
