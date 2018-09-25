@@ -15,7 +15,7 @@ def getNEksponentSample( knownFI= 100 , knownFC= 100 ):
     fCivilization = random.uniform(-2 , 0)
     L = random.uniform(2 , 10)
     
-    fLife = lifeDist(vMin=0, vMax=15, tMin=14, tMax=17, mean=0, sigma=200)
+    fLife = lifeDist(vMin=-35, vMax=15, tMin=14, tMax=17, mean=0, sigma=200)
     fLifeEks = float(mp.log(fLife, 10))
     
     if ( knownFI != 100):
@@ -25,7 +25,7 @@ def getNEksponentSample( knownFI= 100 , knownFC= 100 ):
     else:
         resitev = RStarSample + fPlanets + nEnvironment + fLifeEks + fInteligence + fCivilization + L
        
-    
+    '''
     # modification
     skip = 0
     mini = -RStarSample - L
@@ -35,8 +35,8 @@ def getNEksponentSample( knownFI= 100 , knownFC= 100 ):
             break
         mini-=it
     # modification
-    
-    return (skip,resitev)
+    '''
+    return (resitev)
     
 
 
@@ -47,16 +47,16 @@ def getDistributionOfEks(size=1000, pdfSize=2151, low=-15, high=15,printOn=0, kn
     pristevek = low * zmnozek  # =5000
     izpis = 0
     for i in range(0, size):
-        (skip, parameters) = getNEksponentSample()
+        parameters = getNEksponentSample()
         #parameters = getNEksponentSample( knownFI , knownFC )
         if(printOn):
             if i % (size / 10) == 0:
                 print(izpis, "%")
                 izpis += 10
-        
+        '''
         if skip:
             continue
-             
+        '''
         if (math.isinf(parameters)):
             pdf[0] += 1
             continue

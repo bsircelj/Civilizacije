@@ -36,7 +36,7 @@ for stPar in range( 1, stParMAX + 1 ):
 plt.ylabel('Probability of being alone')
 plt.xlabel('number of parameters')
 x = [ u'1', u'2', u'3', u'4', u'5', u'6', u'7', u'8' , u'9' ]
-z = plt.bar( x, height= y1)
+z = plt.bar( x, height= y1 )
 
 
 #plt.plot(x, y1, 'brown' , label = 'range(0.01 , 1)')
