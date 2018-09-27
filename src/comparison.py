@@ -16,9 +16,9 @@ def normalize1(pdf):
     return pdf
 
 
-(xaxis, yaxisL) = readFile("pdf-sigma-200.csv")
+(xaxis, yaxisL) = readFile("pdf-sigma-200")
 
-(xaxis, yaxisU) = readFile("sigma is 200 uniform2.csv")
+(xaxis, yaxisU) = readFile("sigma is 200 uniform2")
 
 cdf = getCDFNIC(yaxisU)
 yaxisU[0] = yaxisU[1]
@@ -36,7 +36,7 @@ plt.xscale("log")
 plt.plot(xaxis, yaxisL, 'blue')
 
 
-transition = np.linspace(0, 1, 1000)
+transition = np.linspace(0, 1, 200)
 revTransition = np.flip(transition)
 
 X = np.log(xaxis)
@@ -74,7 +74,11 @@ fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 
 # Plot the surface
-ax.plot_surface(X, Y, Z, color='b')
+ax.plot_surface(X, Y, Z, cmap=cm.coolwarm, ccount=100,rcount=100,shade=True,color='b',alpha=1)
+
+ax.set_xlabel("log(N)")
+ax.set_ylabel("log-uniform <-> uniform")
+
 #plt.xscale("log")
 plt.show()
 

@@ -21,13 +21,15 @@ plt.axis([-150, 15,0,2300])
 plt.figure(2)
 normArray = [np.power(10,a) for a in logArray]
 
+
 for i in range(0,4):
 
     start=0
-    end=10**(i+4)
+    end=10**(i)
     plt.subplot(2,2,i+1)
     plt.axis([start, end,0,100])
     plt.hist(normArray,np.linspace(start,end,1000),facecolor='blue',alpha=0.75)
     plt.title(str(start)+' - '+str(end))
     plt.tight_layout()
+
 plt.show()

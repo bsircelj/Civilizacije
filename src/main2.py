@@ -22,6 +22,17 @@ def getPoint():
     
     resitev = RStarSample + fPlanets + nEnvironment + fLifeEks + fInteligence + fCivilization + L
     
+        # modification
+    skip = 0
+    mini = -RStarSample - L
+    for it in (fPlanets, nEnvironment, fInteligence, fCivilization, fLifeEks):
+        if it < np.log10(1/(10**-mini+2)):
+            skip = 1
+            break
+        mini-=it
+    # modification
+    if skip:
+        return getPoint()
     #return np.power(10,resitev)
     if(math.isinf(resitev)):
         return getPoint()
@@ -30,13 +41,13 @@ def getPoint():
 array=[getPoint()]
 startTime = time.time()
 while(1):
-    for _ in range(0,100000):
+    for _ in range(0,1000):
         array.append(getPoint())
-    if time.time()-startTime>70000:
+    if time.time()-startTime>60:
         break
 
 
-saveData(array,"sig200")
+saveData(array,"test2")
 print('done')
     
     
