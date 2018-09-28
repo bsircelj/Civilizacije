@@ -12,7 +12,7 @@ from createGraph import createGraph
 from StandardizeDistribution import StandardizeDistributionW
 import numpy as np
 
-(xaxis,yaxis) = readFile("sigma is 100")
+(xaxis,yaxis) = readFile("laplace_new")
 
 '''
 xaxis2=[0]*len(xaxis)

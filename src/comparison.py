@@ -1,13 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.ndimage.filters as fl
-from IO import readFile
-from ToyModel import getCDFNIC, normalizePDF
+from IO import readFile, readData,save
+from ToyModel import getCDFNIC, normalizePDF, normalizePDFs
 from matplotlib import cm
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
 import numpy as np
+from logHistogramAdd import logHistogramAdd
 
 def normalize1(pdf):
     summ = sum(pdf)
@@ -17,12 +18,22 @@ def normalize1(pdf):
 
 
 (xaxis, yaxisL) = readFile("pdf-sigma-200")
+(_,yaxisLcdf) = readFile("cdf-sigma-200")
 
-(xaxis, yaxisU) = readFile("sigma is 200 uniform2")
+(xaxis, yaxisU) = readFile("laplace_new")
+(_,yaxisUcdf) = readFile("laplace_new_cdf")
+'''
+dat = readData("laplace_cutoff_correction")
+yaxisU = [0]*2151
+for value in dat:
+    yaxisU = logHistogramAdd(-40, 15, 2151, yaxisU, value)    
+save(xaxis,yaxisU,"laplace_cutoff_correction")
 
-cdf = getCDFNIC(yaxisU)
+print("done")
+'''
+#cdf = getCDFNIC(yaxisU)
 yaxisU[0] = yaxisU[1]
-pdf = normalizePDF(yaxisU)
+
 
 yaxisL = normalize1(yaxisL)
 yaxisU = normalize1(yaxisU)
@@ -30,11 +41,24 @@ yaxisU = normalize1(yaxisU)
 yaxisL = fl.gaussian_filter(yaxisL, 5)
 yaxisU = fl.gaussian_filter(yaxisU, 5)
 
-plt.figure(2)
-plt.plot(xaxis, yaxisU, 'red')
-plt.xscale("log")
-plt.plot(xaxis, yaxisL, 'blue')
+yaxisU,yaxisL = normalizePDFs(yaxisU,yaxisL)
+#yaxisL,yaxisU = normalizePDFs(yaxisL,yaxisU)
 
+plt.figure(2)
+plt.plot(xaxis, yaxisU, 'blue',label="Laplace correction")
+plt.xscale("log")
+plt.plot(xaxis, yaxisL, 'red',label="Sandberg")
+plt.xlabel("number of civilizations in our galaxy")
+plt.ylabel("relative frequency")
+
+plt.plot(xaxis,yaxisLcdf,"orange",linestyle='--',label="CDF Sandberg")
+plt.plot(xaxis,yaxisUcdf,"c",linestyle='--',label="CDF Laplace")
+
+
+
+
+plt.legend( loc=2 )
+plt.show()
 
 transition = np.linspace(0, 1, 200)
 revTransition = np.flip(transition)
@@ -56,11 +80,9 @@ x2 *=y2
 Z=x1+x2
 
 #Z = [[0] * len(yaxisL)] * len(transition)
-'''
-for i in range(0, len(transition)):
-    for j in range(0, len(yaxisL)):
-        Z[i][j] = yaxisL[j] * transition[i] + yaxisU[j] * (1 - transition[i])
-'''
+#for i in range(0, len(transition)):
+#    for j in range(0, len(yaxisL)):
+#        Z[i][j] = yaxisL[j] * transition[i] + yaxisU[j] * (1 - transition[i])
 print(x1)
 print(x2,"\n")
 
@@ -77,7 +99,7 @@ ax = fig.add_subplot(111, projection='3d')
 ax.plot_surface(X, Y, Z, cmap=cm.coolwarm, ccount=100,rcount=100,shade=True,color='b',alpha=1)
 
 ax.set_xlabel("log(N)")
-ax.set_ylabel("log-uniform <-> uniform")
+ax.set_ylabel("laplace <-> sandberg")
 
 #plt.xscale("log")
 plt.show()

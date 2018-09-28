@@ -36,7 +36,16 @@ def getNEksponentSample( knownFI= 100 , knownFC= 100 ):
         mini-=it
     # modification
     '''
-    return (resitev)
+        
+    skip = 0
+    mini = -RStarSample - L
+    for it in (fPlanets, nEnvironment, fInteligence, fCivilization, fLifeEks):
+        if it < np.log10(1/(10**-mini+2)):
+            skip = 1
+            break
+        mini-=it
+        
+    return (skip,resitev)
     
 
 
@@ -47,16 +56,16 @@ def getDistributionOfEks(size=1000, pdfSize=2151, low=-15, high=15,printOn=0, kn
     pristevek = low * zmnozek  # =5000
     izpis = 0
     for i in range(0, size):
-        parameters = getNEksponentSample()
+        skip,parameters = getNEksponentSample()
         #parameters = getNEksponentSample( knownFI , knownFC )
         if(printOn):
             if i % (size / 10) == 0:
                 print(izpis, "%")
                 izpis += 10
-        '''
+        
         if skip:
             continue
-        '''
+        
         if (math.isinf(parameters)):
             pdf[0] += 1
             continue

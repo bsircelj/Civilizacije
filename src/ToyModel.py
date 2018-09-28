@@ -8,7 +8,7 @@ import scipy.ndimage.filters as fl
 from IO import save
 
 
-def getStandardTuple(size=100000, pdfSize=10001, low=0 , high=0.2, lowerThan=1, stParametrov=3, start=-5, stop=5, hundredBillions = 100000 ):  # WARNING: PDFSIZE MUST BE 101, 1001, OR 10001, ETC. 
+def getStandardTuple(size=100000, pdfSize=10001, low=0 , high=0.2, lowerThan=1, stParametrov=3, start=-5, stop=5, hundredBillions=100000):  # WARNING: PDFSIZE MUST BE 101, 1001, OR 10001, ETC. 
     pdf = [0] * pdfSize
     arrayOfParameters = []
     stevecManjsihOd1 = 0
@@ -45,7 +45,8 @@ def getStandardTuple(size=100000, pdfSize=10001, low=0 , high=0.2, lowerThan=1, 
 
     return (arrayOfParameters, alonePossibility, x, pdf, cdfNIC, cdfPLOSCINA, desetNaStDecimalk, polOdArraya)
 
-def getStandardTupleNATURALSCALE(size=100000, pdfSize=10001, low=0 , high=0.2, lowerThan=1, stParametrov=3, start=0, stop=100, hundredBillions = 100000 ):  # WARNING: PDFSIZE MUST BE 101, 1001, OR 10001, ETC. 
+
+def getStandardTupleNATURALSCALE(size=100000, pdfSize=10001, low=0 , high=0.2, lowerThan=1, stParametrov=3, start=0, stop=100, hundredBillions=100000):  # WARNING: PDFSIZE MUST BE 101, 1001, OR 10001, ETC. 
     pdf = [0] * pdfSize
     arrayOfParameters = []
     stevecManjsihOd1 = 0
@@ -82,7 +83,8 @@ def getStandardTupleNATURALSCALE(size=100000, pdfSize=10001, low=0 , high=0.2, l
 
     return (arrayOfParameters, alonePossibility, x, pdf, cdfNIC, cdfPLOSCINA, desetNaStDecimalk, polOdArraya)
 
-def getStandardTupleLOGUNIFORM(size=100000, pdfSize=10001, low=0.001 , high=0.2, lowerThan=1, stParametrov=9, start=-15, stop=5, hundredBillions = 100000000000 ):  # WARNING: PDFSIZE MUST BE 101, 1001, OR 10001, ETC. 
+
+def getStandardTupleLOGUNIFORM(size=100000, pdfSize=10001, low=0.001 , high=0.2, lowerThan=1, stParametrov=9, start=-15, stop=5, hundredBillions=100000000000):  # WARNING: PDFSIZE MUST BE 101, 1001, OR 10001, ETC. 
     pdf = [0] * pdfSize
     arrayOfParameters = []
     stevecManjsihOd1 = 0
@@ -91,7 +93,7 @@ def getStandardTupleLOGUNIFORM(size=100000, pdfSize=10001, low=0.001 , high=0.2,
     desetNaStDecimalk = ((pdfSize - 1) / (stop - start))  # =1000
     polOdArraya = start * desetNaStDecimalk  # =5000
     
-    logLow= np.log(low)
+    logLow = np.log(low)
     logHigh = np.log(high)
     
     for j in range(0, size):
@@ -178,6 +180,17 @@ def normalizePDF(pdf):
     return pdf
 
 
+def normalizePDFs(pdf, pdf2):
+    maxPDF = getMaxPDF(pdf)
+    maxPDF2 = getMaxPDF(pdf2)
+    #maxPDF2 = 
+    length = len(pdf)
+    for i in range(0, length):
+        pdf[i] = pdf[i] / maxPDF
+        pdf2[i] = pdf2[i] / maxPDF
+    return (pdf,pdf2)
+
+
 def fromEpsilonGetLowHigh(epsilon=0, option=1, low=0.0, high=0.2):
     if option == 1:
         low, high = 0, 0.2
@@ -199,7 +212,7 @@ def fromEpsilonGetLowHigh(epsilon=0, option=1, low=0.0, high=0.2):
 
 def getAlonePossibility(low=0, high=0.2, size=100000, lowerThan=1, stParametrov=9):
     stevecManjsihOd1 = 0
-    hundredBillions = int(10**(2 + stParametrov))
+    hundredBillions = int(10 ** (2 + stParametrov))
     
     for j in range(0, size):
         
@@ -214,18 +227,19 @@ def getAlonePossibility(low=0, high=0.2, size=100000, lowerThan=1, stParametrov=
     alonePossibility = stevecManjsihOd1 / size
     return alonePossibility
 
+
 def getAlonePossibilityLOGUNIFORM(low=0.001, high=0.2, size=10000, lowerThan=1, stParametrov=9):
     stevecManjsihOd1 = 0
-    hundredBillions = int(10**(2 + stParametrov))
+    hundredBillions = int(10 ** (2 + stParametrov))
     
-    logLow= np.log(low)
+    logLow = np.log(low)
     logHigh = np.log(high)
     
     for j in range(0, size):
         
         parameters = 1
         for i in range(0, stParametrov):
-            r = random.uniform( logLow , logHigh )
+            r = random.uniform(logLow , logHigh)
             parameters *= np.exp(r)
             
         parameters = parameters * hundredBillions
