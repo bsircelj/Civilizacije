@@ -3,11 +3,13 @@ import mpmath as mp
 import random
 import math
 from lifeDist import lifeDist, lifeDist2
+from IO import readData
 
 mp.dps = 230
 
 
-def getNEksponentSample( knownFI= 100 , knownFC= 100 ):
+#def getNEksponentSample( knownFI= 100 , knownFC= 100 ):
+def getNEksponentSample(N):
     RStarSample = random.uniform(0 , 2)
     fPlanets = random.uniform(-1 , 0)
     nEnvironment = random.uniform(-1 , 0)
@@ -18,13 +20,14 @@ def getNEksponentSample( knownFI= 100 , knownFC= 100 ):
     fLife = lifeDist(vMin=-35, vMax=15, tMin=14, tMax=17, mean=0, sigma=200)
     fLifeEks = float(mp.log(fLife, 10))
     
+    ''' 
     if ( knownFI != 100):
         resitev= RStarSample + fPlanets + nEnvironment + fLifeEks + knownFI + fCivilization + L
     elif ( knownFC != 100):
         resitev= RStarSample + fPlanets + nEnvironment + fLifeEks + fInteligence + knownFC + L
     else:
         resitev = RStarSample + fPlanets + nEnvironment + fLifeEks + fInteligence + fCivilization + L
-       
+    '''  
     '''
     # modification
     skip = 0
@@ -36,7 +39,7 @@ def getNEksponentSample( knownFI= 100 , knownFC= 100 ):
         mini-=it
     # modification
     '''
-        
+    '''     
     skip = 0
     mini = -RStarSample - L
     for it in (fPlanets, nEnvironment, fInteligence, fCivilization, fLifeEks):
@@ -44,28 +47,39 @@ def getNEksponentSample( knownFI= 100 , knownFC= 100 ):
             skip = 1
             break
         mini-=it
+        return (skip,resitev)
+    '''
         
-    return (skip,resitev)
+    resitev = random.choice(N)-(RStarSample + fPlanets + nEnvironment + fLifeEks + fInteligence + fCivilization)
+
+    if(math.isinf(resitev)):
+        return getNEksponentSample(N)
+        
+    return resitev
+        
+           
+    
     
 
 
 def getDistributionOfEks(size=1000, pdfSize=2151, low=-15, high=15,printOn=0, knownFI = 100, knownFC = 100):
     xOs = np.linspace(low, high, pdfSize)
     pdf = [0] * pdfSize
-    zmnozek = ((pdfSize - 1) / (high - low))  # =1000
+    zmnozek = ((pdfSize - 1) / (high - low))  # =100
+    N = readData("laplace_cutoff_correction")
     pristevek = low * zmnozek  # =5000
     izpis = 0
     for i in range(0, size):
-        skip,parameters = getNEksponentSample()
+        parameters = getNEksponentSample(N)
         #parameters = getNEksponentSample( knownFI , knownFC )
         if(printOn):
             if i % (size / 10) == 0:
                 print(izpis, "%")
                 izpis += 10
-        
+        '''
         if skip:
             continue
-        
+        '''
         if (math.isinf(parameters)):
             pdf[0] += 1
             continue

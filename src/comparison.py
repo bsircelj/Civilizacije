@@ -17,11 +17,11 @@ def normalize1(pdf):
     return pdf
 
 
-(xaxis, yaxisL) = readFile("pdf-sigma-200")
-(_,yaxisLcdf) = readFile("cdf-sigma-200")
+(xaxis, yaxisL) = readFile("What is L with N sig50")
+#(_,yaxisLcdf) = readFile("cdf-sigma-200")
 
-(xaxis, yaxisU) = readFile("laplace_new")
-(_,yaxisUcdf) = readFile("laplace_new_cdf")
+(xaxis, yaxisU) = readFile("L with laplace")
+#(_,yaxisUcdf) = readFile("L with laplace cdf")
 '''
 dat = readData("laplace_cutoff_correction")
 yaxisU = [0]*2151
@@ -39,20 +39,20 @@ yaxisL = normalize1(yaxisL)
 yaxisU = normalize1(yaxisU)
 
 yaxisL = fl.gaussian_filter(yaxisL, 5)
-yaxisU = fl.gaussian_filter(yaxisU, 5)
+yaxisU = fl.gaussian_filter(yaxisU, 20)
 
 yaxisU,yaxisL = normalizePDFs(yaxisU,yaxisL)
 #yaxisL,yaxisU = normalizePDFs(yaxisL,yaxisU)
 
 plt.figure(2)
-plt.plot(xaxis, yaxisU, 'blue',label="Laplace correction")
+plt.plot(xaxis, yaxisU, 'blue',label="L with Laplace correction")
 plt.xscale("log")
-plt.plot(xaxis, yaxisL, 'red',label="Sandberg")
-plt.xlabel("number of civilizations in our galaxy")
+plt.plot(xaxis, yaxisL, 'red',label="L with Sandberg")
+plt.xlabel("L")
 plt.ylabel("relative frequency")
 
-plt.plot(xaxis,yaxisLcdf,"orange",linestyle='--',label="CDF Sandberg")
-plt.plot(xaxis,yaxisUcdf,"c",linestyle='--',label="CDF Laplace")
+#plt.plot(xaxis,yaxisLcdf,"orange",linestyle='--',label="CDF Sandberg")
+#plt.plot(xaxis,yaxisUcdf,"c",linestyle='--',label="CDF Laplace")
 
 
 
@@ -98,7 +98,7 @@ ax = fig.add_subplot(111, projection='3d')
 # Plot the surface
 ax.plot_surface(X, Y, Z, cmap=cm.coolwarm, ccount=100,rcount=100,shade=True,color='b',alpha=1)
 
-ax.set_xlabel("log(N)")
+ax.set_xlabel("log(L)")
 ax.set_ylabel("laplace <-> sandberg")
 
 #plt.xscale("log")

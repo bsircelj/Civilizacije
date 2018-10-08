@@ -7,10 +7,10 @@ import pylab as p
 from ExponentsAlternative import getDistributionOfEks
 from nicePsevdoPDF import getPDFNice
 #dejanski program:
-start = -40
-stop = 15
-pdfSize = 2151
-size = 100000
+start = -100
+stop = 100
+pdfSize = 10000
+size = 30000
 
 xOs, pdf = getDistributionOfEks(size, pdfSize, low = start, high = stop, printOn=1)
 cdf = getCDFNIC(pdf)
@@ -20,8 +20,8 @@ l = mp.linspace( start, stop, pdfSize )
 xOs = [mp.power(10, x) for x in l]
 pdf = fl.gaussian_filter( pdf , 10)
 
-save(xOs, pdf , "laplace_new")
-save(xOs, cdf , "laplace_new_cdf")
+save(xOs, pdf , "L with laplace")
+save(xOs, cdf , "L with laplace cdf")
 
 
 
