@@ -39,6 +39,7 @@ def StandardizeDistributionW(xaxis,distribution):
         cdf[i] = cdf[i] / surface
         if(distribution[i]>max):
             max = distribution[i]
+    
     distribution = [d/max for d in distribution]
     
     stdDistribution = (length, logXarray, distribution, cdf,cdfW )

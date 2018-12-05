@@ -11,9 +11,10 @@ from lifeDist import lifeDist, lifeDist2
 
 
 plt.figure(1)
-logArray = readData("Longevity")
+logArray = readData("newLowerBound")
 # normed=1,rwidth=0.95
 #n, bins, patches = plt.hist(logArray, 1000, facecolor='red', alpha=0.75,cumulative=True)
+#plt.axis([-5, 50,0,25000])
 n, bins, patches = plt.hist(logArray, 1000, facecolor='blue', alpha=0.75)
 
 maxi = 0
@@ -37,7 +38,7 @@ for i in range(0,4):
     start=0
     end=10**(i)
     plt.subplot(2,2,i+1)
-    plt.axis([start, end,0,100])
+    plt.axis([start, end,0,2000])
     #plt.hist(normArray,np.linspace(start,end,1000),facecolor='red',alpha=0.75,cumulative=True)
     plt.hist(normArray,np.linspace(start,end,100),facecolor='blue',alpha=0.75)
     plt.title(str(start)+' - '+str(end))
